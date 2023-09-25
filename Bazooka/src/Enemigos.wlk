@@ -27,5 +27,5 @@ class Enemigo{
     }
     }
 
-const Cavani = new Enemigo(sprite = "enemy", batalla = false , spriteAnimacion = 0, position = game.at(41,25))
-const Barco = new Enemigo(sprite = "enemy", batalla = false , spriteAnimacion = 0, position = game.at(44,20))
+const Cavani = new Enemigo(sprite = "enemy", batalla = false , spriteAnimacion = 0, position = game.at(25,10))
+const Barco = new Enemigo(sprite = "enemy", batalla = false , spriteAnimacion = 0, position = game.at(28,8))

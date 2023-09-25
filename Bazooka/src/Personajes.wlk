@@ -32,4 +32,4 @@ class Personaje{
     method magiaCura(){}
 }
 
-const Akai = new Personaje(sprite = "Akai", batalla = false, spriteAnimacion = 0, position = game.at(20,20))
+const Akai = new Personaje(sprite = "Akai", batalla = false, spriteAnimacion = 0, position = game.at(5,8))
