@@ -2,6 +2,7 @@ import wollok.game.*
 import Iniciador.*
 import Personajes.*
 import Enemigos.*
+import MenuBatalla.*
 
 object batalla1{
 	
@@ -10,10 +11,12 @@ object batalla1{
 		Akai.cambioEstado()
 		Barco.cambioEstado()
 		Cavani.cambioEstado()
-  		//Objetos en pantalla
+  		//////////Objetos en pantalla
   		game.addVisual(Akai)
   		game.addVisual(Barco)
   		game.addVisual(Cavani)
+  		//////menuBatalla
+  		invocador.menuBatallaAdd()
   		
   		//Animaciones
   		game.onTick(300, "AkaiAnimacion", { Akai.animacion() })
@@ -30,6 +33,16 @@ object batalla1{
 		game.removeTickEvent("CavaniAnimacion")
 		
 		game.clear()
+	}
+	
+}
+
+object invocador {
+	
+	method menuBatallaAdd(){
+		game.addVisual(menuBatallaBase)
+  		game.addVisual(menuBatallaAtacar)
+  		game.addVisual(menuBatallaEsperar)
 	}
 	
 }

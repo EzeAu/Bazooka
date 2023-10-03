@@ -8,6 +8,7 @@ class Enemigo{
     var property position = game.center()
     var property batalla = false
     var property estado = "Mapa"
+    var property vida= 100
 
     method image() = "asset/" + sprite + spriteAnimacion + ".png"
     method cambioEstado(){
@@ -23,6 +24,16 @@ class Enemigo{
             spriteAnimacion++
         }else{
             spriteAnimacion=0
+        }
+    }
+    
+	method ataqueRecibido(){
+
+        self.vida(self.vida()-Akai.danioPersonaje())
+    }
+    method comprobarVida(){
+        if (self.vida()<0){
+            self.vida(0)
         }
     }
     }

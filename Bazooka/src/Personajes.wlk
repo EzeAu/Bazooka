@@ -9,6 +9,9 @@ class Personaje{
     var property position = game.center()
     var property batalla = false
     var property estado = "Mapa"
+    var property vida = 100 
+    var property danioPersonaje = 0
+    var property energia = 10
 	
     method image() = "asset/" + sprite /*+ batalla*/ + spriteAnimacion + ".png"
     method cambioEstado(){
@@ -26,8 +29,36 @@ class Personaje{
             spriteAnimacion=0
         }
     }
-    method ataqueBase(){}
-    method ataqueFuerte(){}
+    method ataqueBase(enemigo) {
+         if(energia!= 0){
+             self.danioPersonaje(10)
+            enemigo.ataqueRecibido()
+        }    
+    }
+    method ataqueFuerte(enemigo){
+        if(energia!= 0){    
+            self.danioPersonaje(30)
+            enemigo.ataqueRecibido()
+            
+            self.energia(self.energia()-2)
+            
+            self.comprobarEnergia()       
+        }
+    }
+    method esperar(){
+        self.energia(10)
+    }
+    method comprobarVida(){
+        if (self.vida()<0){
+            self.vida(0)
+        }
+        
+    }
+    method comprobarEnergia(){
+        if (self.energia()<0){
+            self.energia(0)
+        }
+    }
     method magiaFuego(){}
     method magiaCura(){}
 }
