@@ -50,3 +50,6 @@ object menuBatallaEsperar{
 		fijado = !fijado
 	}
 }
+
+
+

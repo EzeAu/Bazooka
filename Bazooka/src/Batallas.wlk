@@ -17,14 +17,13 @@ object batalla1{
   		game.addVisual(Cavani)
   		//////menuBatalla
   		invocador.menuBatallaAdd()
-  		
+  		//Que Personajes pelean
+  		Akai.enElEquipo(true)
   		//Animaciones
   		game.onTick(300, "AkaiAnimacion", { Akai.animacion() })
   		game.onTick(300, "BarcoAnimacion", { Barco.animacion() })
   		game.onTick(300, "CavaniAnimacion", { Cavani.animacion() })
 	}
-	
-	
 	
 	
 	method borrar(){
@@ -46,3 +45,63 @@ object invocador {
 	}
 	
 }
+
+object controlTurnos{
+	var property cantidadPersonajes = 0
+	
+	method turnoJugadores(){
+		if(Akai.enElEquipo() and self.estaVivo(Akai)){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+		if(Pharsa.enElEquipo() and self.estaVivo(Pharsa)){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+		if (cantidadPersonajes==0){
+			//return "Error 01 No existen personajes con vida>0"
+		}else
+		{
+			//return "Todo bien 01"
+		}
+		
+		if(cantidadPersonajes==1){
+			
+		}else{
+			
+		}
+		
+		
+		
+		self.cantidadPersonajes(0)
+	}
+	
+	method puedeRealizarAccion(){}
+	
+	method turnoEnemigos(){}
+	method estaVivo(_personaje){
+		return _personaje.vida()==0
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

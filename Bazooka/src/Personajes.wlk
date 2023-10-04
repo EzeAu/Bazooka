@@ -12,8 +12,10 @@ class Personaje{
     var property vida = 100 
     var property danioPersonaje = 0
     var property energia = 10
+    var property enElEquipo = false
+    var property realizoAccion
 	
-    method image() = "asset/" + sprite /*+ batalla*/ + spriteAnimacion + ".png"
+    method image() = "asset/" + sprite /*+ estado*/ +spriteAnimacion + ".png"
     method cambioEstado(){
     	batalla = !batalla
     	if (estado == "Mapa"){
@@ -33,6 +35,7 @@ class Personaje{
          if(energia!= 0){
              self.danioPersonaje(10)
             enemigo.ataqueRecibido()
+            self.realizoAccion(true)
         }    
     }
     method ataqueFuerte(enemigo){
@@ -42,7 +45,8 @@ class Personaje{
             
             self.energia(self.energia()-2)
             
-            self.comprobarEnergia()       
+            self.comprobarEnergia()  
+            self.realizoAccion(true)     
         }
     }
     method esperar(){
@@ -51,8 +55,7 @@ class Personaje{
     method comprobarVida(){
         if (self.vida()<0){
             self.vida(0)
-        }
-        
+        } 
     }
     method comprobarEnergia(){
         if (self.energia()<0){
@@ -63,4 +66,5 @@ class Personaje{
     method magiaCura(){}
 }
 
-const Akai = new Personaje(sprite = "Akai", batalla = false, spriteAnimacion = 0, position = game.at(5,8))
+const Akai = new Personaje(sprite = "Akai", batalla = false, spriteAnimacion = 0, position = game.at(5,8), enElEquipo=false, realizoAccion=false)
+const Pharsa = new Personaje(sprite = "Pharsa", batalla = false, spriteAnimacion = 0, position = game.at(5,8), enElEquipo=false, realizoAccion=false)
