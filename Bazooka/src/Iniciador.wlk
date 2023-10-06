@@ -13,25 +13,12 @@ object juego {
   		game.height(768/32)
   		game.cellSize(32)
   		game.title("Bazooka")
-  		game.boardGround("asset/fondoBatalla1.png")
+  		game.boardGround("FondosBatalla/fondoBatalla1.png")
   		
   		//Batalla1
   		keyboard.b().onPressDo { 
   			batalla1.set()
   		}
-  		keyboard.left().onPressDo{
-  			menuBatallaAtacar.cambioFijado()
-  			menuBatallaEsperar.cambioFijado()
-  			menuBatallaEsperar.comprobarFijado()
-  			menuBatallaAtacar.comprobarFijado()
-  		}
-  		keyboard.right().onPressDo{
-  			menuBatallaAtacar.cambioFijado()
-  			menuBatallaEsperar.cambioFijado()
-  			menuBatallaEsperar.comprobarFijado()
-  			menuBatallaAtacar.comprobarFijado()
-  		}
-  		
   		
   		game.start()
 		
