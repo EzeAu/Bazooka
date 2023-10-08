@@ -6,9 +6,8 @@ import Enemigos.*
 object menuBatallaBase{
 	
 	var property sprite = "MenuBatalla"
-	var property position = game.origin()
+	var property position = game.at(0,1)
 	method image() = "MenuBatalla/" + sprite  + ".png"
-	
 	
 }
 class MenuBatalla{
@@ -30,24 +29,30 @@ class MenuBatalla{
 		fijado = !fijado
 	}
 }
-const menuBatalla1 = new MenuBatalla(sprite="menuAtacar", fijado = true, seleccionado = "", position = game.at(20,2))
-const menuBatalla2 = new MenuBatalla(sprite="menuProtejer", fijado = false, seleccionado = "", position = game.at(26,2))
+const menuBatalla1 = new MenuBatalla(sprite="menuAtacar", fijado = true, seleccionado = "Seleccionado", position = game.at(20,3))
+const menuBatalla2 = new MenuBatalla(sprite="menuProtejer", fijado = false, seleccionado = "", position = game.at(26,3))
+
+object menuBatallaCara{
+	var property sprite = "Akai/AkaiCara"
+	var property position = game.at(2,1)
+	method image() = sprite + ".png"
+}
 
 object controlesBatalla{
 	
+	var property fases = 0
+	
 	method aplicar(){
-		keyboard.left().onPressDo{
-  			self.controlesMenuMovimiento()
-  		}
-  		keyboard.right().onPressDo{
-  			self.controlesMenuMovimiento()
-  		}
+		keyboard.left().onPressDo{self.controlesMenuMovimiento()}
+  		keyboard.right().onPressDo{self.controlesMenuMovimiento()}
   		keyboard.a().onPressDo{
-  			self.controlesMenuAceptar()
+  			if(menuBatalla2.fijado() and self.fases()==0){
+  				
+  			}else{
+  				self.controlesMenuAceptar()
+			}
   		}
-  		keyboard.s().onPressDo{
-  			self.controlesMenuSalir()
-  		}
+  		keyboard.s().onPressDo{self.controlesMenuSalir()}
 	}
 	
 	method controlesMenuMovimiento(){
@@ -57,23 +62,31 @@ object controlesBatalla{
   		menuBatalla1.comprobarFijado()
 	}
 	method controlesMenuAceptar(){
-		if (controlTurnos.fases()>0 and controlTurnos.fases()<4){
-			controlTurnos.fases(controlTurnos.fases()+1)
+		if (self.fases()>=0 and self.fases()<4){
+			self.fases(self.fases()+1)
+			self.controlFases(self.fases())
 		}
 	}
 	method controlesMenuSalir(){
-		if (controlTurnos.fases()>0){
-			controlTurnos.fases(controlTurnos.fases()-1)
+		if (self.fases()>0){
+			self.fases(self.fases()-1)
+			self.controlFases(self.fases())
 		}
 	}
-	
+	method controlFases(_fase){
+		if(_fase==0){self.fase0()}
+		if(_fase==1){self.fase1()}
+	}
+	method correccionFases(){
+		if(self.fases()<0){self.fases(0)}
+	}
 	method fase0(){
 		menuBatalla1.sprite("menuAtacar")
-		menuBatalla1.sprite("menuProtejer")
+		menuBatalla2.sprite("menuProtejer")
 	}
 	method fase1(){
 		menuBatalla1.sprite("menuAtacarBasico")
-		menuBatalla1.sprite("menuAtacarFuerte")
+		menuBatalla2.sprite("menuAtacarFuerte")
 	}
 }
 

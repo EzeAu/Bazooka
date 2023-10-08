@@ -10,7 +10,7 @@ class Enemigo{
     var property estado = "Mapa"
     var property vida= 100
 
-    method image() = sprite + spriteAnimacion + ".png"
+    method image() = sprite + estado + spriteAnimacion + ".png"
     method cambioEstado(){
         batalla = !batalla
         if (estado == "Mapa"){
@@ -38,5 +38,5 @@ class Enemigo{
     }
     }
 
-const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false , spriteAnimacion = 0, position = game.at(25,10))
-const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false , spriteAnimacion = 0, position = game.at(28,8))
+const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false , spriteAnimacion = 0, position = game.at(20,10))
+const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false , spriteAnimacion = 0, position = game.at(24,8))

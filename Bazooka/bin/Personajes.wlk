@@ -15,7 +15,7 @@ class Personaje{
     var property enElEquipo = false
     var property realizoAccion
 	
-    method image() = sprite /*+ estado*/ +spriteAnimacion + ".png"
+    method image() = sprite + estado + spriteAnimacion + ".png"
     method cambioEstado(){
     	batalla = !batalla
     	if (estado == "Mapa"){
