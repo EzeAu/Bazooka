@@ -1,5 +1,5 @@
 import wollok.game.*
-import Batallas.*
+import Batallas.*//prueba
 import Personajes.*
 
 class Enemigo{
