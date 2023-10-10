@@ -15,6 +15,8 @@ object batalla1{
   		
   		//////menuBatalla
   		invocador.menuBatallaAdd()
+  		//setFondo
+		fondo.sprite("FondosBatalla/fondoBatalla1")
   		
   		//////////Objetos en pantalla 		
   		game.addVisual(Akai)
@@ -54,15 +56,16 @@ object batalla1{
 	}
 	
 }
-object fondoBatalla{
-	var property sprite = "fondoBatalla1"
+object fondo{
+	var property sprite = "Mapas/Mapa1"
 	var property position = game.origin()
-	method image() = "FondosBatalla/" + sprite + ".png"
+	method image() = sprite + ".png"
 }
 object invocador {
 	
 	method menuBatallaAdd(){
-		game.addVisual(fondoBatalla)
+		//invocar
+		game.addVisual(fondo)
 		game.addVisual(menuBatallaBase)
   		game.addVisual(menuBatalla1)
   		game.addVisual(menuBatalla2)

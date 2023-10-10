@@ -27,7 +27,7 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
   		game.height(768/32)
   		game.cellSize(32)
   		game.title("Bazooka")
- 		game.addVisual(fondoMapa)
+ 		game.addVisual(fondo)
   		
   		self.set()
   		activador.colision()
@@ -84,8 +84,4 @@ object activador{
 		juego.iniciar()
 	}
 }
-object fondoMapa{
-	var property sprite = "Mapa1"
-	var property position = game.origin()
-	method image() = "Mapas/" + sprite + ".png"
-}
+
