@@ -11,7 +11,7 @@ object batalla1{
 		Barco.cambioEstado()
 		Cavani.cambioEstado()
   		
-  		//////////Objetos en pantalla
+  		//////////Objetos en pantalla 		
   		game.addVisual(Akai)
   		game.addVisual(Barco)
   		game.addVisual(Cavani)

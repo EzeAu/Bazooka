@@ -1,0 +1,8 @@
+import Mapas.*
+import Personajes.*
+import Iniciador.*
+import Batallas.*
+
+program Bazooka {
+ mapa1.iniciar()
+}
