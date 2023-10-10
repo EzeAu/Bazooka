@@ -7,17 +7,28 @@ import MenuBatalla.*
 object batalla1{
 	
 	method set(){
-		//
-		Barco.cambioEstado()
-		Cavani.cambioEstado()
+
+  		//set ubicacion
+  		Cavani.position(game.at(20,10))
+  		Barco.position(game.at(24,8))
+  		Akai.position(game.at(5,8))
+  		
+  		//////menuBatalla
+  		invocador.menuBatallaAdd()
   		
   		//////////Objetos en pantalla 		
   		game.addVisual(Akai)
   		game.addVisual(Barco)
   		game.addVisual(Cavani)
   		
-  		//////menuBatalla
-  		invocador.menuBatallaAdd()
+  		//Cambios de Estado
+		Barco.cambioEstado()
+		Cavani.cambioEstado()
+		Akai.cambioEstado()
+		Akai.cambioEstado()
+		
+		//arreglos de sprites
+		Akai.direccion("")
   		
   		//Que Personajes pelean
   		Akai.enElEquipo(true)
@@ -43,10 +54,15 @@ object batalla1{
 	}
 	
 }
-
+object fondoBatalla{
+	var property sprite = "fondoBatalla1"
+	var property position = game.origin()
+	method image() = "FondosBatalla/" + sprite + ".png"
+}
 object invocador {
 	
 	method menuBatallaAdd(){
+		game.addVisual(fondoBatalla)
 		game.addVisual(menuBatallaBase)
   		game.addVisual(menuBatalla1)
   		game.addVisual(menuBatalla2)

@@ -1,7 +1,9 @@
-import Mapas.*
-import Personajes.*
-import Iniciador.*
+import wollok.game.*
 import Batallas.*
+import Personajes.*
+import Enemigos.*
+import MenuBatalla.*
+import Mapas.*
 
 program Bazooka {
  mapa1.iniciar()

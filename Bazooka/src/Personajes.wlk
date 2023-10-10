@@ -17,7 +17,7 @@ class Personaje{
     var property realizoAccion
     var property direccion= "Derecha"
 	
-    method image() = sprite + "/"+/*  estado + */"/"+ direccion + spriteAnimacion + ".png"
+    method image() = sprite + estado + direccion + spriteAnimacion + ".png"
     method cambioEstado(){
     	batalla = !batalla
     	if (estado == "Mapa"){
@@ -85,5 +85,5 @@ class Personaje{
     method magiaCura(){}
 }
 
-const Akai = new Personaje(sprite = "Akai/", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false)
+const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false)
 const Pharsa = new Personaje(sprite = "Pharsa/Pharsa", batalla = false, spriteAnimacion = 0, position = game.at(5,8), enElEquipo=false, realizoAccion=false)
