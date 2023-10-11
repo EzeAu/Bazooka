@@ -9,8 +9,9 @@ class Enemigo{
     var property batalla = false
     var property estado = "Mapa"
     var property vida= 100
+    var property direccion= "Derecha"
 
-    method image() = sprite + estado + spriteAnimacion + ".png"
+    method image() = sprite + estado + direccion + spriteAnimacion + ".png"
     method cambioEstado(){
         batalla = !batalla
         if (estado == "Mapa"){

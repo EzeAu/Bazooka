@@ -76,6 +76,7 @@ object controlesBatalla{
 	method controlFases(_fase){
 		if(_fase==0){self.fase0()}
 		if(_fase==1){self.fase1()}
+		if(_fase==2){self.fase2()}
 	}
 	method correccionFases(){
 		if(self.fases()<0){self.fases(0)}
@@ -87,7 +88,26 @@ object controlesBatalla{
 	method fase1(){
 		menuBatalla1.sprite("menuAtacarBasico")
 		menuBatalla2.sprite("menuAtacarFuerte")
+		flecha.reinicio()
+	}
+	method fase2(){
+		menuBatalla1.sprite("menuSeleccionar")
+		menuBatalla2.sprite("Invisible")
+		flecha.instanciar()
 	}
 }
 
+object flecha{
+	var property sprite = "invisible"
+	var property position = game.at(24,8)
+	method image() = sprite + ".png"
+	
+	method instanciar(){
+		flecha.sprite("Akai/AkaiMapaHerido0")
+	}
+	
+	method reinicio(){
+		flecha.sprite("invisible")
+	}
+}
 

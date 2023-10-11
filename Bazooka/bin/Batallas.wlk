@@ -22,15 +22,17 @@ object batalla1{
   		game.addVisual(Akai)
   		game.addVisual(Barco)
   		game.addVisual(Cavani)
+  		game.addVisual(flecha)
   		
   		//Cambios de Estado
 		Barco.cambioEstado()
 		Cavani.cambioEstado()
-		Akai.cambioEstado()
-		Akai.cambioEstado()
+		
 		
 		//arreglos de sprites
 		Akai.direccion("")
+		Barco.direccion("")
+		Cavani.direccion("")
   		
   		//Que Personajes pelean
   		Akai.enElEquipo(true)
