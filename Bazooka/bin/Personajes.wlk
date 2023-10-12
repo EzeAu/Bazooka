@@ -53,14 +53,14 @@ class Personaje{
     method ataqueBase(enemigo) {
          if(energia!= 0){
              self.danioPersonaje(10)
-            enemigo.ataqueRecibido()
+            enemigo.ataqueRecibido(enemigo.enDondeEstoy())
             self.realizoAccion(true)
         }    
     }
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
             self.danioPersonaje(30)
-            enemigo.ataqueRecibido()
+            enemigo.ataqueRecibido(enemigo.enDondeEstoy())
             
             self.energia(self.energia()-2)
             

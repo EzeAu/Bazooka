@@ -40,17 +40,27 @@ object menuBatallaCara{
 
 object controlesBatalla{
 	
+	var property ataque2 = true
 	var property fases = 0
 	
 	method aplicar(){
 		keyboard.left().onPressDo{self.controlesMenuMovimiento()}
   		keyboard.right().onPressDo{self.controlesMenuMovimiento()}
   		keyboard.a().onPressDo{
-  			if(menuBatalla2.fijado() and self.fases()==0){
-  				
+  			if(menuBatalla2.fijado() and self.fases()==0){	
   			}else{
-  				self.controlesMenuAceptar()
-			}
+  				if(self.fases()==1){
+  					if(menuBatalla2.fijado()){
+  						self.ataque2(true)
+  						self.controlesMenuAceptar()	
+  					}else{
+  						self.ataque2(false)
+  						self.controlesMenuAceptar()	
+  					}
+  				}else{
+  					self.controlesMenuAceptar()	
+  				}
+  			}
   		}
   		keyboard.s().onPressDo{self.controlesMenuSalir()}
 	}
@@ -60,6 +70,8 @@ object controlesBatalla{
   		menuBatalla2.cambioFijado()
   		menuBatalla2.comprobarFijado()
   		menuBatalla1.comprobarFijado()
+  		flecha.elegido(!flecha.elegido())
+  		flecha.cambioElegido()
 	}
 	method controlesMenuAceptar(){
 		if (self.fases()>=0 and self.fases()<4){
@@ -95,11 +107,22 @@ object controlesBatalla{
 		menuBatalla2.sprite("Invisible")
 		flecha.instanciar()
 	}
+	method fase3(){
+		if(ataque2){
+			if(flecha.elegido()){
+				Akai.ataqueFuerte()
+			}
+			
+		}else{
+			Akai.ataqueBase()
+		}
+	}
 }
 
 object flecha{
 	var property sprite = "invisible"
 	var property position = game.at(24,8)
+	var property elegido = false
 	method image() = sprite + ".png"
 	
 	method instanciar(){
@@ -108,6 +131,12 @@ object flecha{
 	
 	method reinicio(){
 		flecha.sprite("invisible")
+	}
+	
+	method cambioElegido(){
+		if(elegido){
+			self.position(game.at(20,10))
+		}else{self.position(game.at(24,8))}
 	}
 }
 

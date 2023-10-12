@@ -10,6 +10,7 @@ class Enemigo{
     var property estado = "Mapa"
     var property vida= 100
     var property direccion= "Derecha"
+    var property enDondeEstoy = true
 
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
     method cambioEstado(){
@@ -28,9 +29,10 @@ class Enemigo{
         }
     }
     
-	method ataqueRecibido(){
-
-        self.vida(self.vida()-Akai.danioPersonaje())
+	method ataqueRecibido(puedo){
+		if(puedo){
+			self.vida(self.vida()-Akai.danioPersonaje())
+		} 
     }
     method comprobarVida(){
         if (self.vida()<0){
@@ -39,5 +41,5 @@ class Enemigo{
     }
     }
 
-const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false , spriteAnimacion = 0, position = game.at(20,10))
-const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false , spriteAnimacion = 0, position = game.at(24,8))
+const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false , spriteAnimacion = 0, position = game.at(20,10), enDondeEstoy = true)
+const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false , spriteAnimacion = 0, position = game.at(24,8), enDondeEstoy = false)

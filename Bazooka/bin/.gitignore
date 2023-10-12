@@ -7,6 +7,7 @@
 /FondosBatalla/
 /Iniciador.wlk
 /Mapas.wlk
+/Mapas/
 /MenuBatalla.wlk
 /MenuBatalla/
 /Personajes.wlk
@@ -14,4 +15,3 @@
 /example.wlk
 /log4j.properties
 /objects.wlk
-/Mapas/
