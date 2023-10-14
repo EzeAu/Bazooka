@@ -4,6 +4,7 @@ import Iniciador.*
 import Mapas.*
 
 class Personaje{
+	var property bloqueado=false
 	var property mapa = mapa1
     var property sprite 
     var property spriteAnimacion
@@ -18,6 +19,7 @@ class Personaje{
     var property direccion= "Derecha"
 	
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
+
     method cambioEstado(){
     	batalla = !batalla
     	if (estado == "Mapa"){
@@ -31,7 +33,7 @@ class Personaje{
   			self.animacionMapa()
     }
     method avanzarMapa(nuevaPosicion){
-    	return nuevaPosicion.x().between(0,31) and nuevaPosicion.y().between(2,19) and !self.colision(nuevaPosicion)
+    	return nuevaPosicion.x().between(0,31) and nuevaPosicion.y().between(2,19) and !self.colision(nuevaPosicion) and !bloqueado
     }
     method colision(nuevaPosicion){
     	return mapa.colisiones().contains(nuevaPosicion)
@@ -84,6 +86,6 @@ class Personaje{
     method magiaFuego(){}
     method magiaCura(){}
 }
+		const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(4,10), enElEquipo=false, realizoAccion=false)
+		const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 1, position = game.at(25,10), enElEquipo=false, realizoAccion=false)
 
-const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false)
-const Pharsa = new Personaje(sprite = "Pharsa/Pharsa", batalla = false, spriteAnimacion = 0, position = game.at(5,8), enElEquipo=false, realizoAccion=false)

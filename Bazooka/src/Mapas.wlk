@@ -36,15 +36,26 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
 		
 	}	
 	method set(){
-		game.addVisual(Akai)
+		self.setObjetos()
+		self.configuracionTeclas()
+		
+	}
+	method setObjetos(){
+
+		activador.position(game.at(24,10))
+		Akai.position(game.at(5,10))
 		game.addVisual(activador)
-		game.onTick(1200, "Detenerser", { Akai.spriteAnimacion(0) })
+		game.addVisual(Akai)
+		game.addVisual(Pharsa)
+		Pharsa.position(game.at(25,10))
+	}
+	method configuracionTeclas(){
+		game.onTick(1100, "Detenerser", { Akai.spriteAnimacion(0) })
 		//configuracion Tecla
 		keyboard.up().onPressDo { 
   			Akai.mover("Arriba")
   			if(Akai.avanzarMapa(Akai.position().up(1))){
   			Akai.position(Akai.position().up(1))
-  			
   			}
   		}
   		keyboard.right().onPressDo { 
@@ -71,17 +82,47 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
 	}
 	
 }
+
 object activador{
-	var property position = game.at(30,10)
+	var property position 
 	method image()= "asset/BloqueChoque.jpg"
 	
 	method colision(){
-		game.onCollideDo(Akai, { activador => activador.iniciaBatalla() })
+		game.onCollideDo(Akai, { activador => activador.setEvento() })
 	}
-	method iniciaBatalla(){
-		game.clear()
+	method evento(){
+		if(!self.seMueveHasta(26,11)){
+		self.animacionEvento()
+		}
+		else{
+		self.siguientePantalla()
+		}
 		
-		juego.iniciar()
 	}
+	method animacionEvento(){
+		Cavani.animacionMapa()
+		Barco.animacionMapa()
+		Cavani.position(Cavani.position().left(1))
+		Barco.position(Barco.position().left(1))
+	}
+	
+	method siguientePantalla(){
+			Barco.spriteAnimacion(0)
+			Barco.spriteAnimacion(0)
+			game.removeTickEvent("Animacion")
+			game.clear()
+			juego.iniciar()
+	}
+	method seMueveHasta(x,y){return Cavani.position()==game.at(x,y)}
+	method setEvento(){
+		Akai.bloqueado(true)
+		Cavani.position(game.at(31,11))
+		Barco.position(game.at(31,10))
+		game.addVisual(Barco)
+		game.addVisual(Cavani)
+		game.onTick(300, "Animacion", { self.evento() })
+		
+	}
+	
 }
 
