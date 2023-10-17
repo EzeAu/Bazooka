@@ -13,6 +13,9 @@ object batalla1{
   		Barco.position(game.at(24,8))
   		Akai.position(game.at(5,8))
   		
+  		//set Enemigos
+  		controlesBatalla.enemigo2(Barco)
+  		controlesBatalla.enemigo1(Cavani)
   		//////menuBatalla
   		invocador.menuBatallaAdd()
   		//setFondo

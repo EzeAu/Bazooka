@@ -40,17 +40,29 @@ object menuBatallaCara{
 
 object controlesBatalla{
 	
+	var property ataque2 = true
 	var property fases = 0
+	var property enemigo1 = ""
+	var property enemigo2 = ""
 	
 	method aplicar(){
 		keyboard.left().onPressDo{self.controlesMenuMovimiento()}
   		keyboard.right().onPressDo{self.controlesMenuMovimiento()}
   		keyboard.a().onPressDo{
-  			if(menuBatalla2.fijado() and self.fases()==0){
-  				
+  			if(menuBatalla2.fijado() and self.fases()==0){	
   			}else{
-  				self.controlesMenuAceptar()
-			}
+  				if(self.fases()==1){
+  					if(menuBatalla2.fijado()){
+  						self.ataque2(true)
+  						self.controlesMenuAceptar()	
+  					}else{
+  						self.ataque2(false)
+  						self.controlesMenuAceptar()	
+  					}
+  				}else{
+  					self.controlesMenuAceptar()	
+  				}
+  			}
   		}
   		keyboard.s().onPressDo{self.controlesMenuSalir()}
 	}
@@ -60,6 +72,8 @@ object controlesBatalla{
   		menuBatalla2.cambioFijado()
   		menuBatalla2.comprobarFijado()
   		menuBatalla1.comprobarFijado()
+  		flecha.elegido(!flecha.elegido())
+  		flecha.cambioElegido()
 	}
 	method controlesMenuAceptar(){
 		if (self.fases()>=0 and self.fases()<4){
@@ -77,6 +91,7 @@ object controlesBatalla{
 		if(_fase==0){self.fase0()}
 		if(_fase==1){self.fase1()}
 		if(_fase==2){self.fase2()}
+		if(_fase==3){self.fase3()}
 	}
 	method correccionFases(){
 		if(self.fases()<0){self.fases(0)}
@@ -94,20 +109,43 @@ object controlesBatalla{
 		menuBatalla1.sprite("menuSeleccionar")
 		menuBatalla2.sprite("Invisible")
 		flecha.instanciar()
+		
+	}
+	method fase3(){
+		if(ataque2){
+			if(flecha.elegido()){
+				Akai.ataqueFuerte(enemigo1)
+			}else{
+				Akai.ataqueFuerte(enemigo2)
+			}
+		}else{
+			if(flecha.elegido()){
+				Akai.ataqueBase(enemigo1)
+			}else{
+				Akai.ataqueBase(enemigo2)
+			}
+		}
 	}
 }
 
 object flecha{
 	var property sprite = "invisible"
 	var property position = game.at(24,8)
+	var property elegido = false
 	method image() = sprite + ".png"
 	
 	method instanciar(){
-		flecha.sprite("Akai/AkaiMapaHerido0")
+		self.sprite("Akai/AkaiMapaHerido0")
 	}
 	
 	method reinicio(){
-		flecha.sprite("invisible")
+		self.sprite("invisible")
+	}
+	
+	method cambioElegido(){
+		if(elegido){
+			self.position(game.at(20,10))
+		}else{self.position(game.at(24,8))}
 	}
 }
 

@@ -17,6 +17,8 @@ class Personaje{
     var property enElEquipo = false
     var property realizoAccion
     var property direccion= "Derecha"
+	var property contador=0
+	
 	
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
 
@@ -55,20 +57,48 @@ class Personaje{
     method ataqueBase(enemigo) {
          if(energia!= 0){
              self.danioPersonaje(10)
-            enemigo.ataqueRecibido()
-            self.realizoAccion(true)
+            game.schedule(100, {
+            	spriteAnimacion=0
+            	self.animacionAtaque()  
+            	game.schedule(800, { enemigo.ataqueRecibido()
+            self.realizoAccion(true) 
+            if(contador==3){
+    		 game.removeTickEvent("AnimacionAtaque")
+    		 self.direccion("")
+    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion() })
+    	}})
+            })
+            
         }    
     }
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
             self.danioPersonaje(30)
-            enemigo.ataqueRecibido()
+            game.schedule(100, {
+            	
+            	self.animacionAtaque()  
+            	game.schedule(800, { enemigo.ataqueRecibido()
+            self.realizoAccion(true) 
+            if(contador==3){
+    		 game.removeTickEvent("AnimacionAtaque")
+    		 self.direccion("")
+    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion() })
+    	}})
+            })
             
             self.energia(self.energia()-2)
             
             self.comprobarEnergia()  
             self.realizoAccion(true)     
         }
+    }
+    method animacionAtaque(){
+ 		spriteAnimacion=0
+    	self.direccion("Ataque")
+    	game.removeTickEvent("AkaiAnimacion")
+    	game.onTick(200, "AnimacionAtaque", {contador++
+    		self.animacion()
+    	})
     }
     method esperar(){
         self.energia(10)
@@ -86,6 +116,5 @@ class Personaje{
     method magiaFuego(){}
     method magiaCura(){}
 }
-		const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(4,10), enElEquipo=false, realizoAccion=false)
-		const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 1, position = game.at(25,10), enElEquipo=false, realizoAccion=false)
-
+const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false, contador=0)
+const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 0, position = game.at(25,10), enElEquipo=false, realizoAccion=false, contador=0)
