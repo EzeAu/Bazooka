@@ -42,6 +42,8 @@ object controlesBatalla{
 	
 	var property ataque2 = true
 	var property fases = 0
+	var property enemigo1 = ""
+	var property enemigo2 = ""
 	
 	method aplicar(){
 		keyboard.left().onPressDo{self.controlesMenuMovimiento()}
@@ -89,6 +91,7 @@ object controlesBatalla{
 		if(_fase==0){self.fase0()}
 		if(_fase==1){self.fase1()}
 		if(_fase==2){self.fase2()}
+		if(_fase==3){self.fase3()}
 	}
 	method correccionFases(){
 		if(self.fases()<0){self.fases(0)}
@@ -106,15 +109,21 @@ object controlesBatalla{
 		menuBatalla1.sprite("menuSeleccionar")
 		menuBatalla2.sprite("Invisible")
 		flecha.instanciar()
+		
 	}
 	method fase3(){
 		if(ataque2){
 			if(flecha.elegido()){
-				Akai.ataqueFuerte()
+				Akai.ataqueFuerte(enemigo1)
+			}else{
+				Akai.ataqueFuerte(enemigo2)
 			}
-			
 		}else{
-			Akai.ataqueBase()
+			if(flecha.elegido()){
+				Akai.ataqueBase(enemigo1)
+			}else{
+				Akai.ataqueBase(enemigo2)
+			}
 		}
 	}
 }
@@ -126,11 +135,11 @@ object flecha{
 	method image() = sprite + ".png"
 	
 	method instanciar(){
-		flecha.sprite("Akai/AkaiMapaHerido0")
+		self.sprite("Akai/AkaiMapaHerido0")
 	}
 	
 	method reinicio(){
-		flecha.sprite("invisible")
+		self.sprite("invisible")
 	}
 	
 	method cambioElegido(){
