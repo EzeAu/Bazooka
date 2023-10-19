@@ -5,7 +5,7 @@ import Enemigos.*
 
 object menuBatallaBase{
 	
-	var property sprite = "MenuBatalla"
+	var property sprite = "AkaiMenu"
 	var property position = game.at(0,1)
 	method image() = "MenuBatalla/" + sprite  + ".png"
 	
@@ -29,12 +29,12 @@ class MenuBatalla{
 		fijado = !fijado
 	}
 }
-const menuBatalla1 = new MenuBatalla(sprite="menuAtacar", fijado = true, seleccionado = "Seleccionado", position = game.at(20,3))
-const menuBatalla2 = new MenuBatalla(sprite="menuProtejer", fijado = false, seleccionado = "", position = game.at(26,3))
+const menuBatalla1 = new MenuBatalla(sprite="AkaiAtaque", fijado = true, seleccionado = "Seleccionado", position = game.at(18,3))
+const menuBatalla2 = new MenuBatalla(sprite="AkaiProteger", fijado = false, seleccionado = "", position = game.at(25,3))
 
 object menuBatallaCara{
 	var property sprite = "Akai/AkaiCara"
-	var property position = game.at(2,1)
+	var property position = game.at(1,2)
 	method image() = sprite + ".png"
 }
 
@@ -97,12 +97,12 @@ object controlesBatalla{
 		if(self.fases()<0){self.fases(0)}
 	}
 	method fase0(){
-		menuBatalla1.sprite("menuAtacar")
-		menuBatalla2.sprite("menuProtejer")
+		menuBatalla1.sprite("AkaiAtaque")
+		menuBatalla2.sprite("AkaiProteger")
 	}
 	method fase1(){
-		menuBatalla1.sprite("menuAtacarBasico")
-		menuBatalla2.sprite("menuAtacarFuerte")
+		menuBatalla1.sprite("AkaiAtaqueBasico")
+		menuBatalla2.sprite("AkaiAtaqueFuerte")
 		flecha.reinicio()
 	}
 	method fase2(){
