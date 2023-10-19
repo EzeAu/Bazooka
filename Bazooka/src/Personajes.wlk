@@ -2,7 +2,7 @@ import wollok.game.*
 import Batallas.*
 import Iniciador.*
 import Mapas.*
-//borr
+//borrar
 class Personaje{
 	var property bloqueado=false
 	var property mapa = mapa1
