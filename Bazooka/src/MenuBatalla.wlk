@@ -2,7 +2,7 @@ import wollok.game.*
 import Batallas.*
 import Personajes.*
 import Enemigos.*
-//borrar
+//borrar.
 object menuBatallaBase{
 	
 	var property sprite = "AkaiMenu"
