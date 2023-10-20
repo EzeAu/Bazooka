@@ -42,9 +42,9 @@ object batalla1{
   		Akai.cambioEstado()
   		
   		//Animaciones
-  		game.onTick(310, "AkaiAnimacion", { Akai.animacion() })
-  		game.onTick(300, "BarcoAnimacion", { Barco.animacion() })
-  		game.onTick(300, "CavaniAnimacion", { Cavani.animacion() })
+  		game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
+  		game.onTick(300, "BarcoAnimacion", { Barco.animacion(0) })
+  		game.onTick(300, "CavaniAnimacion", { Cavani.animacion(0) })
   		
   		//Controles
   		controlesBatalla.aplicar()
@@ -75,6 +75,8 @@ object invocador {
   		game.addVisual(menuBatalla1)
   		game.addVisual(menuBatalla2)
   		game.addVisual(menuBatallaCara)
+  		game.addVisual(menuBatallaHp)
+  		game.addVisual(menuBatallaEp)
 	}
 	
 }

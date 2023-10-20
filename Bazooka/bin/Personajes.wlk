@@ -32,7 +32,7 @@ class Personaje{
     }
     method mover(cambioDireccion){
     		self.direccion(cambioDireccion)
-  			self.animacionMapa()
+  			self.animacion(1)
     }
     method avanzarMapa(nuevaPosicion){
     	return nuevaPosicion.x().between(0,31) and nuevaPosicion.y().between(2,19) and !self.colision(nuevaPosicion) and !bloqueado
@@ -40,18 +40,12 @@ class Personaje{
     method colision(nuevaPosicion){
     	return mapa.colisiones().contains(nuevaPosicion)
     }
-    method animacionMapa(){
-    	 if (spriteAnimacion!=2){
-            spriteAnimacion++
-        }else{
-            spriteAnimacion=1
-        }
-    }
-    method animacion(){
+
+    method animacion(incicial){
         if (spriteAnimacion!=2){
             spriteAnimacion++
         }else{
-            spriteAnimacion=0
+            spriteAnimacion=incicial//0
         }
     }
     method ataqueBase(enemigo) {
@@ -65,7 +59,7 @@ class Personaje{
             if(contador==3){
     		 game.removeTickEvent("AnimacionAtaque")
     		 self.direccion("")
-    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion() })
+    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
     	}})
             })
             
@@ -97,7 +91,7 @@ class Personaje{
     	self.direccion("Ataque")
     	game.removeTickEvent("AkaiAnimacion")
     	game.onTick(200, "AnimacionAtaque", {contador++
-    		self.animacion()
+    		self.animacion(0)
     	})
     }
     method esperar(){

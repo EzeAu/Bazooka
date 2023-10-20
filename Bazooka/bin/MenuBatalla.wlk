@@ -38,6 +38,18 @@ object menuBatallaCara{
 	method image() = sprite + ".png"
 }
 
+object menuBatallaHp{
+	var property sprite = "hp0"
+	var property position = game.at(9,4)
+	method image() = sprite + ".png"
+}
+
+object menuBatallaEp{
+	var property sprite = "ep0"
+	var property position = game.at(9,2)
+	method image() = sprite + ".png"
+}
+
 object controlesBatalla{
 	
 	var property ataque2 = true
@@ -106,7 +118,7 @@ object controlesBatalla{
 		flecha.reinicio()
 	}
 	method fase2(){
-		menuBatalla1.sprite("menuSeleccionar")
+		menuBatalla1.sprite("AkaiElegirObjetivo")
 		menuBatalla2.sprite("Invisible")
 		flecha.instanciar()
 		

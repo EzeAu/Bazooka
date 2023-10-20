@@ -100,15 +100,15 @@ object activador{
 		
 	}
 	method animacionEvento(){
-		Cavani.animacionMapa()
-		Barco.animacionMapa()
+		Barco.animacion(0)
+		Barco.animacion(0)
 		Cavani.position(Cavani.position().left(1))
 		Barco.position(Barco.position().left(1))
 	}
 	
 	method siguientePantalla(){
 			Barco.spriteAnimacion(0)
-			Barco.spriteAnimacion(0)
+			Cavani.spriteAnimacion(0)
 			game.removeTickEvent("Animacion")
 			game.clear()
 			juego.iniciar()
@@ -118,8 +118,8 @@ object activador{
 		Akai.bloqueado(true)
 		Cavani.position(game.at(31,11))
 		Barco.position(game.at(31,10))
-		game.addVisual(Barco)
 		game.addVisual(Cavani)
+		game.addVisual(Barco)
 		game.onTick(300, "Animacion", { self.evento() })
 		
 	}
