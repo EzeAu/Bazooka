@@ -2,6 +2,7 @@ import wollok.game.*
 import Batallas.*
 import Iniciador.*
 import Mapas.*
+import MenuBatalla.*
 //borrar.
 class Personaje{
 	var property bloqueado=false
@@ -50,11 +51,11 @@ class Personaje{
     }
     method ataqueBase(enemigo) {
          if(energia!= 0){
-             self.danioPersonaje(10)
+            controlesBatalla.personajeObjeto().danioPersonaje(10)
             game.schedule(100, {
             	spriteAnimacion=0
-            	self.animacionAtaque()  
-            	game.schedule(800, { enemigo.ataqueRecibido()
+            	self.animacionAtaque("Ataque")  
+            	game.schedule(800, { controlesBatalla.personaje()
             self.realizoAccion(true) 
             if(contador==3){
     		 game.removeTickEvent("AnimacionAtaque")
@@ -67,11 +68,11 @@ class Personaje{
     }
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
-            self.danioPersonaje(30)
+            controlesBatalla.personajeObjeto()self.danioPersonaje(30)
             game.schedule(100, {
             	
-            	self.animacionAtaque()  
-            	game.schedule(800, { enemigo.ataqueRecibido()
+            	self.animacionAtaque("Ataque")  
+            	game.schedule(800, { enemigo.ataqueRecibido(controlesBatalla.personaje())
             self.realizoAccion(true) 
             if(contador==3){
     		 game.removeTickEvent("AnimacionAtaque")
@@ -86,9 +87,9 @@ class Personaje{
             self.realizoAccion(true)     
         }
     }
-    method animacionAtaque(){
+    method animacionAtaque(accion){
  		spriteAnimacion=0
-    	self.direccion("Ataque")
+    	self.direccion(accion)
     	game.removeTickEvent("AkaiAnimacion")
     	game.onTick(200, "AnimacionAtaque", {contador++
     		self.animacion(0)

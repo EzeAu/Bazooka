@@ -56,6 +56,8 @@ object controlesBatalla{
 	var property fases = 0
 	var property enemigo1 = ""
 	var property enemigo2 = ""
+	var property personaje = "Akai"
+	var property personajeObjeto = Akai
 	
 	method aplicar(){
 		keyboard.left().onPressDo{self.controlesMenuMovimiento()}
@@ -100,41 +102,41 @@ object controlesBatalla{
 		}
 	}
 	method controlFases(_fase){
-		if(_fase==0){self.fase0()}
-		if(_fase==1){self.fase1()}
-		if(_fase==2){self.fase2()}
-		if(_fase==3){self.fase3()}
+		if(_fase==0){self.fase0(personaje)}
+		if(_fase==1){self.fase1(personaje)}
+		if(_fase==2){self.fase2(personaje)}
+		if(_fase==3){self.fase3(personajeObjeto)}
 	}
 	method correccionFases(){
 		if(self.fases()<0){self.fases(0)}
 	}
-	method fase0(){
-		menuBatalla1.sprite("AkaiAtaque")
-		menuBatalla2.sprite("AkaiProteger")
+	method fase0(_personaje){
+		menuBatalla1.sprite(_personaje+"Ataque")
+		menuBatalla2.sprite(_personaje+"Proteger")
 	}
-	method fase1(){
-		menuBatalla1.sprite("AkaiAtaqueBasico")
-		menuBatalla2.sprite("AkaiAtaqueFuerte")
+	method fase1(_personaje){
+		menuBatalla1.sprite(_personaje+"AtaqueBasico")
+		menuBatalla2.sprite(_personaje+"AtaqueFuerte")
 		flecha.reinicio()
 	}
-	method fase2(){
-		menuBatalla1.sprite("AkaiElegirObjetivo")
+	method fase2(_personaje){
+		menuBatalla1.sprite(_personaje+"ElegirObjetivo")
 		menuBatalla2.sprite("Invisible")
 		flecha.instanciar()
 		
 	}
-	method fase3(){
+	method fase3(_personaje){
 		if(ataque2){
 			if(flecha.elegido()){
-				Akai.ataqueFuerte(enemigo1)
+				_personaje.ataqueFuerte(enemigo1)
 			}else{
-				Akai.ataqueFuerte(enemigo2)
+				_personaje.ataqueFuerte(enemigo2)
 			}
 		}else{
 			if(flecha.elegido()){
-				Akai.ataqueBase(enemigo1)
+				_personaje.ataqueBase(enemigo1)
 			}else{
-				Akai.ataqueBase(enemigo2)
+				_personaje.ataqueBase(enemigo2)
 			}
 		}
 	}

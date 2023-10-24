@@ -1,14 +1,17 @@
 import wollok.game.*
 import Batallas.*
 import Personajes.*
+import MenuBatalla.*
 
 
 class Enemigo inherits Personaje{
 
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
-	method ataqueRecibido(){
+	method ataqueRecibido(_personaje){
 		
-			self.vida(self.vida() - Akai.danioPersonaje())
+			self.vida(self.vida() - _personaje.danioPersonaje())
+			self.animacionAtaque("Danio")
+			self.direccion("")
 		 
     }
 
