@@ -10,11 +10,12 @@ class Enemigo inherits Personaje{
 	method ataqueRecibido(_personaje){
 		
 			self.vida(self.vida() - _personaje.danioPersonaje())
-			self.animacionAtaque("Danio")
-			self.direccion("")
-		 
+			self.direccion("Danio")
+			game.schedule(950,  { self.direccion("") })
+			game.say(self, "Auch!!!")
     }
 
+	
     }
 
 const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(20,10),realizoAccion=false)

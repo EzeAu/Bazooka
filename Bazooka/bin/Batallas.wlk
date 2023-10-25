@@ -47,7 +47,8 @@ object batalla1{
   		game.onTick(300, "CavaniAnimacion", { Cavani.animacion(0) })
   		
   		//Controles
-  		controlesBatalla.aplicar()
+  		controlTurnos.turnoJugadores()
+  		//controlesBatalla.aplicar()
   		
 	}
 	
@@ -86,35 +87,39 @@ object controlTurnos{
 	var property fases = 0//0=Ata,Prot 1=ABas,APro 2=Objetivo 3=atacaPersonaje
 	
 	method turnoJugadores(){
-		if(Akai.enElEquipo() and self.estaVivo(Akai)){
+		if(self.estaVivo(Akai) and !Akai.realizoAccion()){
 			self.cantidadPersonajes(self.cantidadPersonajes()+1)
 		}
-		if(Pharsa.enElEquipo() and self.estaVivo(Pharsa)){
+		if(self.estaVivo(Pharsa) and !Akai.realizoAccion()){
 			self.cantidadPersonajes(self.cantidadPersonajes()+1)
 		}
 		if (cantidadPersonajes==0){
-			//return "Error 01 No existen personajes con vida>0"
-		}else
-		{
-			//return "Todo bien 01"
-		}
-		
-		if(cantidadPersonajes==1){
-			
+			if(self.estaVivo(Pharsa) or self.estaVivo(Akai)){
+				
+				self.turnoEnemigos()
+			}else{
+				//GAME OVER!!!
+			}
 		}else{
-			
+			controlesBatalla.aplicar(controlesBatalla.controles())
 		}
-		
-		
-		
 		self.cantidadPersonajes(0)
 	}
 	
 	method puedeRealizarAccion(){}
 	
-	method turnoEnemigos(){}
+	method turnoEnemigos(){
+		
+		menuBatalla1.sprite("invisible0")
+		menuBatalla2.sprite("invisible0")
+		menuBatalla1.seleccionado("")
+		menuBatalla2.seleccionado("")
+		flecha.reinicio()
+		game.say(Cavani, "Ahora ataco Yo")
+		
+	}
 	method estaVivo(_personaje){
-		return _personaje.vida()==0
+		return _personaje.vida()>0 and _personaje.enElEquipo()
 	}
 	
 }

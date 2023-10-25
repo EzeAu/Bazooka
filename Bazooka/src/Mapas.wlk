@@ -43,7 +43,7 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
 	method setObjetos(){
 
 		activador.position(game.at(24,10))
-		Akai.position(game.at(5,10))
+		Akai.position(game.at(20,10))
 		game.addVisual(activador)
 		game.addVisual(Akai)
 		game.addVisual(Pharsa)

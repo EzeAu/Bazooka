@@ -19,6 +19,7 @@ class Personaje{
     var property realizoAccion
     var property direccion= "Derecha"
 	var property contador=0
+	var property modificadorDanio = 0
 	
 	
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
@@ -95,8 +96,10 @@ class Personaje{
     		self.animacion(0)
     	})
     }
-    method esperar(){
+    method proteger(){
         self.energia(10)
+        self.modificadorDanio(10)
+        self.direccion("Proteger")
     }
     method comprobarVida(){
         if (self.vida()<0){

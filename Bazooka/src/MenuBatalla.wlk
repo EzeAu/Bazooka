@@ -39,15 +39,24 @@ object menuBatallaCara{
 }
 
 object menuBatallaHp{
-	var property sprite = "hp0"
+	var property sprite = 100
 	var property position = game.at(9,4)
-	method image() = sprite + ".png"
+	method image() = "HP/HP" + sprite + ".png"
+	
+	method setHp(vida){
+		self.sprite(controlesBatalla.personajeObjeto().vida())
+	}
 }
 
+
 object menuBatallaEp{
-	var property sprite = "ep0"
+	var property sprite = 10
 	var property position = game.at(9,2)
-	method image() = sprite + ".png"
+	method image() = "EP/EP" + sprite + ".png"
+	
+	method setEp(energia){
+		self.sprite(controlesBatalla.personajeObjeto().energia())
+	}
 }
 
 object controlesBatalla{
@@ -58,12 +67,15 @@ object controlesBatalla{
 	var property enemigo2 = ""
 	var property personaje = "Akai"
 	var property personajeObjeto = Akai
+	var property controles = true
 	
-	method aplicar(){
-		keyboard.left().onPressDo{self.controlesMenuMovimiento()}
-  		keyboard.right().onPressDo{self.controlesMenuMovimiento()}
+	method aplicar(aplicado){
+		keyboard.left().onPressDo{if(self.controles()){self.controlesMenuMovimiento()}}
+  		keyboard.right().onPressDo{if(self.controles()){self.controlesMenuMovimiento()}}
   		keyboard.a().onPressDo{
-  			if(menuBatalla2.fijado() and self.fases()==0){	
+  			if(self.controles()){
+  			if(menuBatalla2.fijado() and self.fases()==0){
+  				self.faseProteger(personajeObjeto)	
   			}else{
   				if(self.fases()==1){
   					if(menuBatalla2.fijado()){
@@ -75,11 +87,15 @@ object controlesBatalla{
   					}
   				}else{
   					self.controlesMenuAceptar()	
+  					}
   				}
   			}
   		}
-  		keyboard.s().onPressDo{self.controlesMenuSalir()}
+  		keyboard.s().onPressDo{if(self.controles()){self.controlesMenuSalir()}}
+
 	}
+	
+	
 	
 	method controlesMenuMovimiento(){
 		menuBatalla1.cambioFijado()
@@ -90,7 +106,7 @@ object controlesBatalla{
   		flecha.cambioElegido()
 	}
 	method controlesMenuAceptar(){
-		if (self.fases()>=0 and self.fases()<4){
+		if (self.fases()>=0 and self.fases()<4){//VER
 			self.fases(self.fases()+1)
 			self.controlFases(self.fases())
 		}
@@ -106,22 +122,31 @@ object controlesBatalla{
 		if(_fase==1){self.fase1(personaje)}
 		if(_fase==2){self.fase2(personaje)}
 		if(_fase==3){self.fase3(personajeObjeto)}
+		if(_fase==4){self.fase4(personajeObjeto)}
 	}
 	method correccionFases(){
 		if(self.fases()<0){self.fases(0)}
 	}
+	method faseProteger(_personaje){
+		_personaje.proteger()
+		self.fase4(personajeObjeto)
+	}
 	method fase0(_personaje){
 		menuBatalla1.sprite(_personaje+"Ataque")
 		menuBatalla2.sprite(_personaje+"Proteger")
+		flecha.instanciar()
+		flecha.reinicio()
 	}
 	method fase1(_personaje){
 		menuBatalla1.sprite(_personaje+"AtaqueBasico")
 		menuBatalla2.sprite(_personaje+"AtaqueFuerte")
+		flecha.instanciar()
 		flecha.reinicio()
 	}
 	method fase2(_personaje){
 		menuBatalla1.sprite(_personaje+"ElegirObjetivo")
-		menuBatalla2.sprite("Invisible")
+		menuBatalla2.sprite("invisible0")
+		menuBatalla2.seleccionado("")
 		flecha.instanciar()
 		
 	}
@@ -139,21 +164,35 @@ object controlesBatalla{
 				_personaje.ataqueBase(enemigo2)
 			}
 		}
+		self.fase4(personajeObjeto)
+	}
+	
+	method fase4(_personaje){
+		self.controles(false)
+		self.aplicar(self.controles())
+		_personaje.realizoAccion(true)
+		controlTurnos.turnoJugadores()	
+		self.fases(0)
 	}
 }
 
 object flecha{
-	var property sprite = "invisible"
+	var property sprite = "invisible0"
 	var property position = game.at(24,8)
 	var property elegido = false
-	method image() = sprite + ".png"
+	var property spriteAnimacion
+	method image() = sprite + spriteAnimacion + ".png"
 	
 	method instanciar(){
-		self.sprite("Akai/AkaiMapaHerido0")
+		self.spriteAnimacion(0)
+		game.onTick(250,"FlechaAnimacion", { self.animacion(0)})
+		self.sprite("MenuBatalla/Flecha")
 	}
 	
 	method reinicio(){
-		self.sprite("invisible")
+		self.sprite("invisible0")
+		self.spriteAnimacion("")
+        game.removeTickEvent("FlechaAnimacion")
 	}
 	
 	method cambioElegido(){
@@ -161,5 +200,13 @@ object flecha{
 			self.position(game.at(20,10))
 		}else{self.position(game.at(24,8))}
 	}
+	
+	method animacion(incicial){
+        if (spriteAnimacion!=2){
+            spriteAnimacion++
+        }else{
+            spriteAnimacion=incicial//0
+        }
+}
 }
 
