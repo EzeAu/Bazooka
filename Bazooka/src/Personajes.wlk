@@ -52,28 +52,30 @@ class Personaje{
     }
     method ataqueBase(enemigo) {
          if(energia!= 0){
-            controlesBatalla.personajeObjeto().danioPersonaje(10)
+            self.danioPersonaje(10)
             game.schedule(100, {
             	spriteAnimacion=0
             	self.animacionAtaque("Ataque")  
-            	game.schedule(800, { controlesBatalla.personaje()
-            self.realizoAccion(true) 
-            if(contador==3){
-    		 game.removeTickEvent("AnimacionAtaque")
-    		 self.direccion("")
-    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
-    	}})
+            	game.schedule(800, { 
+            		enemigo.ataqueRecibido(self)
+            		self.realizoAccion(true) 
+            		if(contador==3){
+    		 		game.removeTickEvent("AnimacionAtaque")
+    		 		self.direccion("")
+    		 		game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
+    			}})
             })
             
         }    
     }
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
-            controlesBatalla.personajeObjeto()self.danioPersonaje(30)
+            //controlesBatalla.personajeObjeto()
+            self.danioPersonaje(30)
             game.schedule(100, {
             	
             	self.animacionAtaque("Ataque")  
-            	game.schedule(800, { enemigo.ataqueRecibido(controlesBatalla.personaje())
+            	game.schedule(800, { enemigo.ataqueRecibido(self)
             self.realizoAccion(true) 
             if(contador==3){
     		 game.removeTickEvent("AnimacionAtaque")

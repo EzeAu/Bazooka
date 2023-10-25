@@ -7,7 +7,7 @@ import MenuBatalla.*
 object batalla1{
 	
 	method set(){
-
+		keyboard.enter().onPressDo{ game.stop() }//QUIT
   		//set ubicacion
   		Cavani.position(game.at(20,10))
   		Barco.position(game.at(24,8))
@@ -115,7 +115,7 @@ object controlTurnos{
 		menuBatalla1.seleccionado("")
 		menuBatalla2.seleccionado("")
 		flecha.reinicio()
-		game.say(Cavani, "Ahora ataco Yo")
+		game.say(menuBatallaCara, "Turno Enemigos")
 		
 	}
 	method estaVivo(_personaje){

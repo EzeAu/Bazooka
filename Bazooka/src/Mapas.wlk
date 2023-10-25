@@ -50,9 +50,10 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
 		Pharsa.position(game.at(25,10))
 	}
 	method configuracionTeclas(){
+		keyboard.enter().onPressDo{ game.stop() }//QUIT
 		game.onTick(1100, "Detenerser", { Akai.spriteAnimacion(0) })
 		//configuracion Tecla
-		keyboard.up().onPressDo { 
+		keyboard.up() { 
   			Akai.mover("Arriba")
   			if(Akai.avanzarMapa(Akai.position().up(1))){
   			Akai.position(Akai.position().up(1))
