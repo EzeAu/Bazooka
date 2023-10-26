@@ -43,7 +43,7 @@ object menuBatallaHp{
 	var property position = game.at(9,4)
 	method image() = "HP/HP" + sprite + ".png"
 	
-	method setHp(vida){
+	method setHp(){
 		self.sprite(controlesBatalla.personajeObjeto().vida())
 	}
 }
@@ -129,6 +129,8 @@ object controlesBatalla{
 	}
 	method faseProteger(_personaje){
 		_personaje.proteger()
+		flecha.instanciar()
+		flecha.reinicio()
 		self.fase4(personajeObjeto)
 	}
 	method fase0(_personaje){
@@ -164,6 +166,7 @@ object controlesBatalla{
 				_personaje.ataqueBase(enemigo2)
 			}
 		}
+		flecha.reinicio()
 		self.fase4(personajeObjeto)
 	}
 	

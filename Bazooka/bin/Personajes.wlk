@@ -3,6 +3,7 @@ import Batallas.*
 import Iniciador.*
 import Mapas.*
 import MenuBatalla.*
+import Enemigos.*
 //borrar.
 class Personaje{
 	var property bloqueado=false

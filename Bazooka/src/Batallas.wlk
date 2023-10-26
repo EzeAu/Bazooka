@@ -114,12 +114,41 @@ object controlTurnos{
 		menuBatalla2.sprite("invisible0")
 		menuBatalla1.seleccionado("")
 		menuBatalla2.seleccionado("")
-		flecha.reinicio()
+		//flecha.reinicio()
+		self.cantidadPersonajes(0)
 		game.say(menuBatallaCara, "Turno Enemigos")
 		
+		if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+		if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+		
+		if (cantidadPersonajes==0){
+			game.say(Akai, "Gane")
+			//WIN!!!
+		}else{
+		game.schedule(2500, {
+			if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
+				controlesBatalla.enemigo1().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
+			}else{
+				if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
+					controlesBatalla.enemigo2().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
+				}
+			}
+		})
+		}
+		
+		
 	}
+	
 	method estaVivo(_personaje){
 		return _personaje.vida()>0 and _personaje.enElEquipo()
+	}
+	
+	method estaVivoEnemigo(_enemigo){
+		return _enemigo.vida()>0 
 	}
 	
 }
