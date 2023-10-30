@@ -81,7 +81,7 @@ class Personaje{
             if(contador==3){
     		 game.removeTickEvent("AnimacionAtaque")
     		 self.direccion("")
-    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion() })
+    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
     	}})
             })
             
