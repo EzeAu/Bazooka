@@ -7,7 +7,6 @@ import MenuBatalla.*
 
 class Enemigo inherits Personaje{
 
-    method image() = sprite + estado + direccion + spriteAnimacion + ".png"
 	method ataqueRecibido(_personaje){
 			self.vida(self.vida() - _personaje.danioPersonaje())
 			self.direccion("Danio")
