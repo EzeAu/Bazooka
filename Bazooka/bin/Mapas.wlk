@@ -5,6 +5,7 @@ import Enemigos.*
 import MenuBatalla.*
 import Iniciador.*
 
+
 object mapa1 {
 const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),game.at(3,7),game.at(3,8),game.at(4,4),game.at(5,4)
 	,game.at(6,4),game.at(7,4),game.at(8,4),game.at(3,8),game.at(4,8),game.at(5,8),game.at(6,8),game.at(7,8),game.at(7,7),game.at(8,6)
@@ -23,16 +24,14 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
 	method iniciar(){
 		
 		//Parametros Ventana
-		game.width(1024/32)
-  		game.height(768/32)
-  		game.cellSize(32)
-  		game.title("Bazooka")
  		game.addVisual(fondo)
   		
   		self.set()
   		activador.colision()
   		//Mapa 1
-  		game.start()
+  		
+
+  		
 		
 	}	
 	method set(){
