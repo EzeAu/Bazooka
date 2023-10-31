@@ -9,8 +9,8 @@ object juego {
 	
 	method iniciar(){
 		
-  		mapa2.set()
-  		game.start()
+  		batalla1.set()
+  		
 
 	}	
 }

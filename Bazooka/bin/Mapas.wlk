@@ -60,12 +60,13 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
 	game.at(27,12),game.at(26,12),game.at(28,12),game.at(29,12),game.at(30,12),game.at(31,12),game.at(27,8),game.at(28,9)
 	,game.at(29,9),game.at(30,9),game.at(31,9),game.at(26,9)
 }
-	method image()="Mapas/Mapa1.png"
+	
 	
 	method iniciar(){
-  		
+  		game.addVisual(fondo)
   		self.set()
-  		activador1.colision()		
+  		activador1.colision()
+	
 	}	
 	method set(){
 		self.setObjetos()
