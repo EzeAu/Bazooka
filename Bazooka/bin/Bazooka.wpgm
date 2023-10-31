@@ -18,6 +18,7 @@ program Bazooka {
 	keyboard.enter().onPressDo({if (inicio.compruebaInicioSong()){
 		inicioSong.stop()
 		mapa1Song.play()
+		inicio.compruebaInicioSong(false)
 	}})
 	
 	
