@@ -7,29 +7,48 @@ import MenuBatalla.*
 object batalla1{
 	
 	method set(){
-		//
-		Barco.cambioEstado()
-		Cavani.cambioEstado()
+		keyboard.enter().onPressDo{ game.stop() }//QUIT
+  		//set ubicacion
+  		Cavani.position(game.at(20,10))
+  		Barco.position(game.at(24,8))
+  		Akai.position(game.at(5,8))
   		
-  		//////////Objetos en pantalla
+  		//set Enemigos
+  		controlesBatalla.enemigo2(Barco)
+  		controlesBatalla.enemigo1(Cavani)
+  		//////menuBatalla
+  		invocador.menuBatallaAdd()
+  		//setFondo
+		fondo.sprite("FondosBatalla/fondoBatalla1")
+  		
+  		//////////Objetos en pantalla 		
   		game.addVisual(Akai)
   		game.addVisual(Barco)
   		game.addVisual(Cavani)
+  		game.addVisual(flecha)
   		
-  		//////menuBatalla
-  		invocador.menuBatallaAdd()
+  		//Cambios de Estado
+		Barco.cambioEstado()
+		Cavani.cambioEstado()
+		
+		
+		//arreglos de sprites
+		Akai.direccion("")
+		Barco.direccion("")
+		Cavani.direccion("")
   		
   		//Que Personajes pelean
   		Akai.enElEquipo(true)
   		Akai.cambioEstado()
   		
   		//Animaciones
-  		game.onTick(310, "AkaiAnimacion", { Akai.animacion() })
-  		game.onTick(300, "BarcoAnimacion", { Barco.animacion() })
-  		game.onTick(300, "CavaniAnimacion", { Cavani.animacion() })
+  		game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
+  		game.onTick(300, "BarcoAnimacion", { Barco.animacion(0) })
+  		game.onTick(300, "CavaniAnimacion", { Cavani.animacion(0) })
   		
   		//Controles
-  		controlesBatalla.aplicar()
+  		controlTurnos.turnoJugadores()
+  		//controlesBatalla.aplicar()
   		
 	}
 	
@@ -43,14 +62,22 @@ object batalla1{
 	}
 	
 }
-
+object fondo{
+	var property sprite = "Mapas/Mapa1"
+	var property position = game.origin()
+	method image() = sprite + ".png"
+}
 object invocador {
 	
 	method menuBatallaAdd(){
+		//invocar
+		game.addVisual(fondo)
 		game.addVisual(menuBatallaBase)
   		game.addVisual(menuBatalla1)
   		game.addVisual(menuBatalla2)
   		game.addVisual(menuBatallaCara)
+  		game.addVisual(menuBatallaHp)
+  		game.addVisual(menuBatallaEp)
 	}
 	
 }
@@ -60,35 +87,68 @@ object controlTurnos{
 	var property fases = 0//0=Ata,Prot 1=ABas,APro 2=Objetivo 3=atacaPersonaje
 	
 	method turnoJugadores(){
-		if(Akai.enElEquipo() and self.estaVivo(Akai)){
+		if(self.estaVivo(Akai) and !Akai.realizoAccion()){
 			self.cantidadPersonajes(self.cantidadPersonajes()+1)
 		}
-		if(Pharsa.enElEquipo() and self.estaVivo(Pharsa)){
+		if(self.estaVivo(Pharsa) and !Akai.realizoAccion()){
 			self.cantidadPersonajes(self.cantidadPersonajes()+1)
 		}
 		if (cantidadPersonajes==0){
-			//return "Error 01 No existen personajes con vida>0"
-		}else
-		{
-			//return "Todo bien 01"
-		}
-		
-		if(cantidadPersonajes==1){
-			
+			if(self.estaVivo(Pharsa) or self.estaVivo(Akai)){
+				
+				self.turnoEnemigos()
+			}else{
+				//GAME OVER!!!
+			}
 		}else{
-			
+			controlesBatalla.aplicar(controlesBatalla.controles())
 		}
-		
-		
-		
 		self.cantidadPersonajes(0)
 	}
 	
 	method puedeRealizarAccion(){}
 	
-	method turnoEnemigos(){}
+	method turnoEnemigos(){
+		
+		menuBatalla1.sprite("invisible0")
+		menuBatalla2.sprite("invisible0")
+		menuBatalla1.seleccionado("")
+		menuBatalla2.seleccionado("")
+		//flecha.reinicio()
+		self.cantidadPersonajes(0)
+		game.say(menuBatallaCara, "Turno Enemigos")
+		
+		if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+		if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+		
+		if (cantidadPersonajes==0){
+			game.say(Akai, "Gane")
+			//WIN!!!
+		}else{
+		game.schedule(2500, {
+			if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
+				controlesBatalla.enemigo1().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
+			}else{
+				if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
+					controlesBatalla.enemigo2().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
+				}
+			}
+		})
+		}
+		
+		
+	}
+	
 	method estaVivo(_personaje){
-		return _personaje.vida()==0
+		return _personaje.vida()>0 and _personaje.enElEquipo()
+	}
+	
+	method estaVivoEnemigo(_enemigo){
+		return _enemigo.vida()>0 
 	}
 	
 }
