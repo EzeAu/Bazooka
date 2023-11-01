@@ -1,4 +1,4 @@
-import wollok.game.*//////asfdasdfasdfasdfasdfsfd
+import wollok.game.*
 import Iniciador.*
 import Personajes.*
 import Enemigos.*
@@ -98,12 +98,15 @@ object controlTurnos{
 				
 				self.turnoEnemigos()
 			}else{
+				game.say(Akai, "Perdi")
 				//GAME OVER!!!
 			}
 		}else{
 			controlesBatalla.aplicar(controlesBatalla.controles())
 		}
 		self.cantidadPersonajes(0)
+		controlesBatalla.enemigo1().realizoAccion(false)
+		controlesBatalla.enemigo2().realizoAccion(false)
 	}
 	
 	method puedeRealizarAccion(){}
@@ -129,12 +132,21 @@ object controlTurnos{
 			game.say(Akai, "Gane")
 			//WIN!!!
 		}else{
-		game.schedule(2500, {
+		game.schedule(2000, {
 			if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
 				controlesBatalla.enemigo1().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
+				self.turnoEnemigos()
 			}else{
 				if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
 					controlesBatalla.enemigo2().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
+					self.turnoEnemigos()
+				}else{
+					controlesBatalla.controles(true)
+					menuBatalla1.sprite(controlesBatalla.personaje() + "Ataque")
+					menuBatalla2.sprite(controlesBatalla.personaje() + "Proteger")
+					Akai.realizoAccion(false)
+					Pharsa.realizoAccion(false)
+					self.turnoJugadores()
 				}
 			}
 		})
@@ -148,11 +160,10 @@ object controlTurnos{
 	}
 	
 	method estaVivoEnemigo(_enemigo){
-		return _enemigo.vida()>0 
+		return _enemigo.vida()>0 and !_enemigo.realizoAccion() 
 	}
 	
 }
-
 
 
 
