@@ -52,9 +52,10 @@ class Personaje{
         }
     }
     method ataqueBase(enemigo) {
+    	game.say(Akai, "BBBBBBB")
          if(energia!= 0){
-            self.danioPersonaje(10)
-            game.schedule(100, {
+            self.danioPersonaje(20)
+            game.onTick(100, "pausa2",{
             	spriteAnimacion=0
             	self.animacionAtaque("Ataque")  
             	game.schedule(800, { 
@@ -62,9 +63,13 @@ class Personaje{
             		self.realizoAccion(true) 
             		if(contador==3){
     		 		game.removeTickEvent("AnimacionAtaque")
+    		 		
     		 		self.direccion("")
-    		 		game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
+    		 		game.say(Akai, "AAAAAAAA")
+    		 		contador =0
     			}})
+    			game.removeTickEvent("pausa2")
+    			game.say(Akai, "CCCCCC")
             })
             
         }    
@@ -72,31 +77,37 @@ class Personaje{
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
             //controlesBatalla.personajeObjeto()
-            self.danioPersonaje(30)
-            game.schedule(100, {
-            	
+            self.danioPersonaje(40)
+            game.onTick(100, "pausa2",{
+            	spriteAnimacion=0
             	self.animacionAtaque("Ataque")  
-            	game.schedule(800, { enemigo.ataqueRecibido(self)
-            self.realizoAccion(true) 
-            if(contador==3){
-    		 game.removeTickEvent("AnimacionAtaque")
-    		 self.direccion("")
-    		 game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
-    	}})
+            	game.schedule(800, { 
+            		enemigo.ataqueRecibido(self)
+            		self.realizoAccion(true) 
+            		if(contador==3){
+    		 		game.removeTickEvent("AnimacionAtaque")
+    		 		
+    		 		self.direccion("")
+    		 		game.say(Akai, "AAAAAAAA")
+    		 		contador =0
+    			}})
+    			game.removeTickEvent("pausa2")
+    			game.say(Akai, "CCCCCC")
             })
             
             self.energia(self.energia()-2)
             
-            self.comprobarEnergia()  
+            self.comprobarEnergia()
+            menuBatallaEp.setEp()  
             self.realizoAccion(true)     
         }
     }
     method animacionAtaque(accion){
  		spriteAnimacion=0
     	self.direccion(accion)
-    	game.removeTickEvent("AkaiAnimacion")
-    	game.onTick(200, "AnimacionAtaque", {contador++
-    		self.animacion(0)
+    	game.onTick(200, "AnimacionAtaque", {
+    		contador++
+    	//	self.animacion(0)
     	})
     }
     method proteger(){

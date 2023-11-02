@@ -6,7 +6,9 @@ import MenuBatalla.*
 
 
 class Enemigo inherits Personaje{
-
+	
+	
+	
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
 	method ataqueRecibido(_personaje){
 			self.vida(self.vida() - _personaje.danioPersonaje())
@@ -19,14 +21,16 @@ class Enemigo inherits Personaje{
 		game.schedule(100, {
             	spriteAnimacion=0
             	self.animacionAtaques("Ataque")  
-            	game.schedule(800, { 
+            	game.schedule(800 ,{ 
             		self.calculoDanio(_personaje)
             		self.realizoAccion(true) 
             		if(contador==3){
     		 		game.removeTickEvent("AnimacionAtaque")
     		 		self.direccion("")
     		 		menuBatallaHp.setHp()
+    		 		contador = 0
     			}})
+    			
             })
 		
 	}
@@ -47,3 +51,6 @@ class Enemigo inherits Personaje{
 
 const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(20,10),realizoAccion=false, danioPersonaje=15)
 const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=15)
+
+
+

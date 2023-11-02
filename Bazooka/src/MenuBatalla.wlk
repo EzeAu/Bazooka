@@ -54,17 +54,20 @@ object menuBatallaEp{
 	var property position = game.at(9,2)
 	method image() = "EP/EP" + sprite + ".png"
 	
-	method setEp(energia){
+	method setEp(){
 		self.sprite(controlesBatalla.personajeObjeto().energia())
 	}
 }
+
+
+
 
 object controlesBatalla{
 	
 	var property ataque2 = true
 	var property fases = 0
-	var property enemigo1 = ""
-	var property enemigo2 = ""
+	var property enemigo1 = Barco
+	var property enemigo2 = Barco
 	var property personaje = "Akai"
 	var property personajeObjeto = Akai
 	var property controles = true
@@ -95,8 +98,6 @@ object controlesBatalla{
 
 	}
 	
-	
-	
 	method controlesMenuMovimiento(){
 		menuBatalla1.cambioFijado()
   		menuBatalla2.cambioFijado()
@@ -106,7 +107,7 @@ object controlesBatalla{
   		flecha.cambioElegido()
 	}
 	method controlesMenuAceptar(){
-		if (self.fases()>=0 and self.fases()<4){//VER
+		if (self.fases()>=0 and self.fases()<=3){//VER
 			self.fases(self.fases()+1)
 			self.controlFases(self.fases())
 		}
@@ -126,6 +127,7 @@ object controlesBatalla{
 	}
 	method correccionFases(){
 		if(self.fases()<0){self.fases(0)}
+		if(self.fases()>4){self.fases(0)}
 	}
 	method faseProteger(_personaje){
 		_personaje.proteger()
@@ -150,7 +152,6 @@ object controlesBatalla{
 		menuBatalla2.sprite("invisible0")
 		menuBatalla2.seleccionado("")
 		flecha.instanciar()
-		
 	}
 	method fase3(_personaje){
 		if(ataque2){
@@ -171,6 +172,7 @@ object controlesBatalla{
 	}
 	
 	method fase4(_personaje){
+		ataque2 = false
 		self.controles(false)
 		self.aplicar(self.controles())
 		_personaje.realizoAccion(true)

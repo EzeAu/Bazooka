@@ -4,10 +4,22 @@ import Personajes.*
 import Enemigos.*
 import MenuBatalla.*
 
+object vidaB {
+	
+	method position() = game.at(24,8)
+	
+	method text() = "" + Barco.vida()
+}
+object vidaC {
+	
+	method position() = game.at(20,10)
+	
+	method text() = "" + controlesBatalla.fases()
+}
+
 object batalla1{
 	
 	method set(){
-		keyboard.enter().onPressDo{ game.stop() }//QUIT
   		//set ubicacion
   		Cavani.position(game.at(20,10))
   		Barco.position(game.at(24,8))
@@ -26,6 +38,10 @@ object batalla1{
   		game.addVisual(Barco)
   		game.addVisual(Cavani)
   		game.addVisual(flecha)
+  		
+  		game.addVisual(vidaB)
+  		game.addVisual(vidaC)
+  		
   		
   		//Cambios de Estado
 		Barco.cambioEstado()
@@ -85,8 +101,10 @@ object invocador {
 object controlTurnos{
 	var property cantidadPersonajes = 0
 	var property fases = 0//0=Ata,Prot 1=ABas,APro 2=Objetivo 3=atacaPersonaje
+	var cont = true
 	
 	method turnoJugadores(){
+		cantidadPersonajes = 0
 		if(self.estaVivo(Akai) and !Akai.realizoAccion()){
 			self.cantidadPersonajes(self.cantidadPersonajes()+1)
 		}
@@ -102,7 +120,10 @@ object controlTurnos{
 				//GAME OVER!!!
 			}
 		}else{
+			
 			controlesBatalla.aplicar(controlesBatalla.controles())
+			controlesBatalla.fases(0)
+			controlesBatalla.controlFases(controlesBatalla.fases())
 		}
 		self.cantidadPersonajes(0)
 		controlesBatalla.enemigo1().realizoAccion(false)
@@ -112,13 +133,12 @@ object controlTurnos{
 	method puedeRealizarAccion(){}
 	
 	method turnoEnemigos(){
-		
+		cantidadPersonajes = 0
 		menuBatalla1.sprite("invisible0")
 		menuBatalla2.sprite("invisible0")
 		menuBatalla1.seleccionado("")
 		menuBatalla2.seleccionado("")
 		//flecha.reinicio()
-		self.cantidadPersonajes(0)
 		game.say(menuBatallaCara, "Turno Enemigos")
 		
 		if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
@@ -141,9 +161,9 @@ object controlTurnos{
 					controlesBatalla.enemigo2().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
 					self.turnoEnemigos()
 				}else{
+					controlesBatalla.ataque2(true)
 					controlesBatalla.controles(true)
-					menuBatalla1.sprite(controlesBatalla.personaje() + "Ataque")
-					menuBatalla2.sprite(controlesBatalla.personaje() + "Proteger")
+					controlesBatalla.fases(0)
 					Akai.realizoAccion(false)
 					Pharsa.realizoAccion(false)
 					self.turnoJugadores()

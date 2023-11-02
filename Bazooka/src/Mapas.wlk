@@ -11,7 +11,6 @@ class Mapas{
  method iniciar(){}
  method set(){}
  method configuracionTeclas(){
-	keyboard.enter().onPressDo{ game.stop() }//QUIT
 	game.onTick(1100, "Detenerser", { Akai.spriteAnimacion(0) })
 	//configuracion Tecla
 	keyboard.up().onPressDo { 

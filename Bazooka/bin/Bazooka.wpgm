@@ -14,21 +14,19 @@ program Bazooka {
 	inicioSong.shouldLoop(true)
 	mapa1Song.shouldLoop(true)
 	
-	game.schedule(10, { inicioSong.play()} )
+	game.schedule(1, { inicioSong.play()} )
 	keyboard.enter().onPressDo({if (inicio.compruebaInicioSong()){
 		inicioSong.stop()
 		mapa1Song.play()
 		inicio.compruebaInicioSong(false)
+		titulo.sprite("invisible0")
+		enter.sprite("invisible0")
+		
 	}})
 	
-	
-	
  	inicio.set()
- 	
-	
-	
+ 		
 }
-
 
 
 	
