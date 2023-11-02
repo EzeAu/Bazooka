@@ -13,7 +13,9 @@ class Enemigo inherits Personaje{
 	method ataqueRecibido(_personaje){
 			self.vida(self.vida() - _personaje.danioPersonaje())
 			self.direccion("Danio")
-			game.schedule(950,  { self.direccion("") })
+			game.schedule(950,  { self.direccion("") 
+				Akai.muerto(self)
+			})
     }
 	
 	method atacar(_personaje){
@@ -29,9 +31,11 @@ class Enemigo inherits Personaje{
     		 		self.direccion("")
     		 		menuBatallaHp.setHp()
     		 		contador = 0
+    		 		Akai.muerto(_personaje)
     			}})
     			
             })
+            
 		
 	}
 	
@@ -49,8 +53,8 @@ class Enemigo inherits Personaje{
 	
 }
 
-const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(20,10),realizoAccion=false, danioPersonaje=15)
-const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=15)
+const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(20,10),realizoAccion=false, danioPersonaje=10)
+const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=10)
 
 
 

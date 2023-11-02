@@ -52,7 +52,7 @@ class Personaje{
         }
     }
     method ataqueBase(enemigo) {
-    	game.say(Akai, "BBBBBBB")
+    	
          if(energia!= 0){
             self.danioPersonaje(20)
             game.onTick(100, "pausa2",{
@@ -65,22 +65,21 @@ class Personaje{
     		 		game.removeTickEvent("AnimacionAtaque")
     		 		
     		 		self.direccion("")
-    		 		game.say(Akai, "AAAAAAAA")
-    		 		contador =0
-    			}})
+    		 		
+    		 		contador = 0
+    			}self.muerto(enemigo)})
     			game.removeTickEvent("pausa2")
-    			game.say(Akai, "CCCCCC")
+    			
             })
             
         }    
     }
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
-            //controlesBatalla.personajeObjeto()
             self.danioPersonaje(40)
             game.onTick(100, "pausa2",{
             	spriteAnimacion=0
-            	self.animacionAtaque("Ataque")  
+            	 self.animacionAtaque("Ataque")
             	game.schedule(800, { 
             		enemigo.ataqueRecibido(self)
             		self.realizoAccion(true) 
@@ -88,18 +87,16 @@ class Personaje{
     		 		game.removeTickEvent("AnimacionAtaque")
     		 		
     		 		self.direccion("")
-    		 		game.say(Akai, "AAAAAAAA")
+    		 		
     		 		contador =0
-    			}})
+    		 		
+    			}self.muerto(enemigo)})
     			game.removeTickEvent("pausa2")
-    			game.say(Akai, "CCCCCC")
+    			
             })
-            
             self.energia(self.energia()-2)
-            
             self.comprobarEnergia()
-            menuBatallaEp.setEp()  
-            self.realizoAccion(true)     
+            menuBatallaEp.setEp()       
         }
     }
     method animacionAtaque(accion){
@@ -114,6 +111,7 @@ class Personaje{
         self.energia(10)
         self.modificadorDanio(10)
         self.direccion("Proteger")
+        menuBatallaEp.setEp() 
     }
     method comprobarVida(){
         if (self.vida()<0){
@@ -125,6 +123,13 @@ class Personaje{
             self.energia(0)
         }
     }
+    
+    method muerto(_personaje){
+    	if(_personaje.vida()<=0){
+    		_personaje.direccion("Dead")
+    	}	
+    }
+    
     method magiaFuego(){}
     method magiaCura(){}
 }

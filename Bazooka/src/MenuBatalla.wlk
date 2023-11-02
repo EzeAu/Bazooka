@@ -99,15 +99,17 @@ object controlesBatalla{
 	}
 	
 	method controlesMenuMovimiento(){
-		menuBatalla1.cambioFijado()
-  		menuBatalla2.cambioFijado()
-  		menuBatalla2.comprobarFijado()
-  		menuBatalla1.comprobarFijado()
+		if(fases!=2){
+			menuBatalla1.cambioFijado()
+  			menuBatalla2.cambioFijado()
+  			menuBatalla2.comprobarFijado()
+  			menuBatalla1.comprobarFijado()
+		}
   		flecha.elegido(!flecha.elegido())
   		flecha.cambioElegido()
 	}
 	method controlesMenuAceptar(){
-		if (self.fases()>=0 and self.fases()<=3){//VER
+		if (self.fases()>=0 and self.fases()<4){//VER
 			self.fases(self.fases()+1)
 			self.controlFases(self.fases())
 		}
@@ -160,6 +162,7 @@ object controlesBatalla{
 			}else{
 				_personaje.ataqueFuerte(enemigo2)
 			}
+			
 		}else{
 			if(flecha.elegido()){
 				_personaje.ataqueBase(enemigo1)
@@ -174,7 +177,7 @@ object controlesBatalla{
 	method fase4(_personaje){
 		ataque2 = false
 		self.controles(false)
-		self.aplicar(self.controles())
+		//self.aplicar(self.controles()) CODIGO MALO!!! :( 
 		_personaje.realizoAccion(true)
 		controlTurnos.turnoJugadores()	
 		self.fases(0)

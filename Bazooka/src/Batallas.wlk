@@ -14,7 +14,7 @@ object vidaC {
 	
 	method position() = game.at(20,10)
 	
-	method text() = "" + controlesBatalla.fases()
+	method text() = "" + Cavani.vida()
 }
 
 object batalla1{
@@ -65,6 +65,7 @@ object batalla1{
   		//Controles
   		controlTurnos.turnoJugadores()
   		//controlesBatalla.aplicar()
+  		controlesBatalla.aplicar(controlesBatalla.controles())
   		
 	}
 	
@@ -101,9 +102,14 @@ object invocador {
 object controlTurnos{
 	var property cantidadPersonajes = 0
 	var property fases = 0//0=Ata,Prot 1=ABas,APro 2=Objetivo 3=atacaPersonaje
-	var cont = true
 	
 	method turnoJugadores(){
+		
+		if(self.partidaGanada(controlesBatalla.enemigo1()) and self.partidaGanada(controlesBatalla.enemigo2())){
+			game.say(Akai, "Gane2")
+			controlesBatalla.controles(false)
+			game.schedule(1000, {game.say(Akai, "Inicia Mapa2")})
+		}
 		cantidadPersonajes = 0
 		if(self.estaVivo(Akai) and !Akai.realizoAccion()){
 			self.cantidadPersonajes(self.cantidadPersonajes()+1)
@@ -115,15 +121,17 @@ object controlTurnos{
 			if(self.estaVivo(Pharsa) or self.estaVivo(Akai)){
 				
 				self.turnoEnemigos()
+				
 			}else{
 				game.say(Akai, "Perdi")
+				controlesBatalla.controles(false)
 				//GAME OVER!!!
 			}
 		}else{
 			
-			controlesBatalla.aplicar(controlesBatalla.controles())
+			
 			controlesBatalla.fases(0)
-			controlesBatalla.controlFases(controlesBatalla.fases())
+			controlesBatalla.controlFases(0)
 		}
 		self.cantidadPersonajes(0)
 		controlesBatalla.enemigo1().realizoAccion(false)
@@ -138,9 +146,7 @@ object controlTurnos{
 		menuBatalla2.sprite("invisible0")
 		menuBatalla1.seleccionado("")
 		menuBatalla2.seleccionado("")
-		//flecha.reinicio()
-		game.say(menuBatallaCara, "Turno Enemigos")
-		
+		//flecha.reinicio()		
 		if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
 			self.cantidadPersonajes(self.cantidadPersonajes()+1)
 		}
@@ -150,6 +156,7 @@ object controlTurnos{
 		
 		if (cantidadPersonajes==0){
 			game.say(Akai, "Gane")
+			controlesBatalla.controles(false)
 			//WIN!!!
 		}else{
 		game.schedule(2000, {
@@ -181,6 +188,9 @@ object controlTurnos{
 	
 	method estaVivoEnemigo(_enemigo){
 		return _enemigo.vida()>0 and !_enemigo.realizoAccion() 
+	}
+	method partidaGanada(_enemigo){
+		return _enemigo.vida()<=0  
 	}
 	
 }
