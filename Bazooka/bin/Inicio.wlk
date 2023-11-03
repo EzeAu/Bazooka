@@ -8,8 +8,12 @@ object inicio {
 	var property spriteAnimacion = 1
 	var property compruebaInicioSong = false
 	var property position = game.origin()
+	const mapa1Song = game.sound("song/mapa1.mp3")
 	method image() =  sprite + spriteAnimacion + ".png"
 	
+	method detener(){
+		mapa1Song.stop()
+	}
 	method set(){
 		//Parametros Ventana
 		game.width(1024/32)
@@ -21,6 +25,7 @@ object inicio {
 		game.addVisual(titulo)
 		game.addVisual(enter)
 		
+		
 		game.onTick(50, "InicioAnimacion", { self.animacion() })
 		self.compruebaInicioSong(true)
 		keyboard.enter().onPressDo{
@@ -28,6 +33,7 @@ object inicio {
 			sprite= "Cargando/cargando"
 			spriteAnimacion=3
 			game.onTick(300, "inicioAnimacion2" ,{ self.animacion(3) } )
+			mapa1Song.play()
 			game.schedule(4500, { 
 				sprite="invisible0"
 				mapa1.iniciar()

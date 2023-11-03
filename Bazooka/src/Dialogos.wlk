@@ -13,10 +13,10 @@ class Dialogos {
 }
 object dialogosMapa1 inherits Dialogos{
 	method animar(){
-		game.schedule(1000,{image="Dialogos/Cavanidialogo1.png"})
-		game.schedule(3000,{image="Dialogos/AkaiDialogo1.png"})
-		game.schedule(5000,{image="Dialogos/Barcodialogo1.png"})
-		game.schedule(7000,{image="Dialogos/Barcodialogo2.png"})
-		game.schedule(9000,{image="Dialogos/Cavanidialogo2.png"})
+		game.schedule(100,{image="Dialogos/Cavanidialogo1.png"})
+		game.schedule(200,{image="Dialogos/AkaiDialogo1.png"})
+		game.schedule(300,{image="Dialogos/Barcodialogo1.png"})
+		game.schedule(400,{image="Dialogos/Barcodialogo2.png"})
+		game.schedule(500,{image="Dialogos/Cavanidialogo2.png"})
 	}
 }

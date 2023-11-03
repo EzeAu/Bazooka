@@ -3,6 +3,7 @@ import Iniciador.*
 import Personajes.*
 import Enemigos.*
 import MenuBatalla.*
+import Inicio.*
 
 object vidaB {
 	
@@ -84,6 +85,20 @@ object fondo{
 	var property position = game.origin()
 	method image() = sprite + ".png"
 }
+object gameOver{
+	var property sprite = "GameOver/GameOver"
+	var property spriteAnimacion = 1
+	var property position = game.origin()
+	method image() = sprite + spriteAnimacion + ".png"
+	
+	method animacion(incicial){
+        if (spriteAnimacion!=1){
+            spriteAnimacion--
+        }else{
+            spriteAnimacion=incicial//0
+        }
+    }
+}
 object invocador {
 	
 	method menuBatallaAdd(){
@@ -100,8 +115,11 @@ object invocador {
 }
 
 object controlTurnos{
+	const gameoverSong = game.sound("song/gameover.mp3")
+	
 	var property cantidadPersonajes = 0
 	var property fases = 0//0=Ata,Prot 1=ABas,APro 2=Objetivo 3=atacaPersonaje
+	var property compruebaGameOverSong = false
 	
 	method turnoJugadores(){
 		
@@ -125,6 +143,14 @@ object controlTurnos{
 			}else{
 				game.say(Akai, "Perdi")
 				controlesBatalla.controles(false)
+				compruebaGameOverSong = true
+				game.schedule(1000, {
+					inicio.detener()
+					gameoverSong.play()
+					self.compruebaGameOverSong(false)
+					game.addVisual(gameOver)
+					game.onTick(300, "inicioAnimacion2" ,{ gameOver.animacion(4) } )
+				})
 				//GAME OVER!!!
 			}
 		}else{
@@ -173,6 +199,8 @@ object controlTurnos{
 					controlesBatalla.fases(0)
 					Akai.realizoAccion(false)
 					Pharsa.realizoAccion(false)
+					Akai.modificadorDanio(0)
+					Pharsa.modificadorDanio(0)
 					self.turnoJugadores()
 				}
 			}

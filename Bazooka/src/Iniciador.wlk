@@ -10,7 +10,5 @@ object juego {
 	method iniciar(){
 		
   		batalla1.set()
-  		
-
-	}	
+  	}	
 }
