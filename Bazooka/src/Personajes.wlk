@@ -81,7 +81,7 @@ class Personaje{
     }
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
-            self.danioPersonaje(100)
+            self.danioPersonaje(40)
             game.onTick(100, "pausa2",{
             	spriteAnimacion=0
             	 self.animacionAtaque("Ataque")

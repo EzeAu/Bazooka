@@ -111,7 +111,7 @@ object mapa2 inherits Mapas{
 		game.at(22,11),game.at(21,10),game.at(20,11),game.at(18,10),game.at(19,9),game.at(20,9)
 		,game.at(21,9),game.at(22,9),game.at(23,9),game.at(24,10),game.at(24,11),
 		game.at(24,12),game.at(24,13),game.at(24,14),game.at(24,15),game.at(25,15),
-		game.at(28,12),game.at(27,15)
+		game.at(28,12),game.at(27,15),game.at(26,7)
 		,game.at(26,15),game.at(27,17),game.at(28,15),game.at(29,15),game.at(30,15)
 		,game.at(0,12),game.at(1,12),game.at(2,12),game.at(3,11),game.at(4,10),
 		game.at(5,9),game.at(6,9),game.at(7,8),game.at(8,7),game.at(9,8),game.at(10,9)
