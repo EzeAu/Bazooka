@@ -21,6 +21,10 @@ class Personaje{
     var property direccion= "Derecha"
 	var property contador=0
 	var property modificadorDanio = 0
+	var property x1
+	var property x2
+	var property y1
+	var property y2
 	
 	
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
@@ -38,7 +42,8 @@ class Personaje{
   			self.animacion(1)
     }
     method avanzarMapa(nuevaPosicion){
-    	return nuevaPosicion.x().between(0,31) and nuevaPosicion.y().between(2,19) and !self.colision(nuevaPosicion) and !bloqueado
+    	
+    	return nuevaPosicion.x().between(x1,x2) and nuevaPosicion.y().between(y1,y2) and !self.colision(nuevaPosicion) and !bloqueado
     }
     method colision(nuevaPosicion){
     	return mapa.colisiones().contains(nuevaPosicion)
@@ -76,7 +81,7 @@ class Personaje{
     }
     method ataqueFuerte(enemigo){
         if(energia!= 0){    
-            self.danioPersonaje(40)
+            self.danioPersonaje(100)
             game.onTick(100, "pausa2",{
             	spriteAnimacion=0
             	 self.animacionAtaque("Ataque")
@@ -133,5 +138,5 @@ class Personaje{
     method magiaFuego(){}
     method magiaCura(){}
 }
-const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false, contador=0)
-const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 1, position = game.at(25,10), enElEquipo=false, realizoAccion=false, contador=0)
+const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false, contador=0,x1=0,x2=31,y1=2,y2=19)
+const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 1, position = game.at(25,10), enElEquipo=false, realizoAccion=false, contador=0,x1=0,x2=31,y1=2,y2=19)

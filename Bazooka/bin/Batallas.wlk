@@ -4,7 +4,7 @@ import Personajes.*
 import Enemigos.*
 import MenuBatalla.*
 import Inicio.*
-
+import Mapas.*
 object vidaB {
 	
 	method position() = game.at(24,8)
@@ -126,7 +126,9 @@ object controlTurnos{
 		if(self.partidaGanada(controlesBatalla.enemigo1()) and self.partidaGanada(controlesBatalla.enemigo2())){
 			game.say(Akai, "Gane2")
 			controlesBatalla.controles(false)
-			game.schedule(1000, {game.say(Akai, "Inicia Mapa2")})
+			game.clear()
+			mapa2.iniciar()
+			//game.schedule(1000, {game.say(Akai, "Inicia Mapa2")})
 		}
 		cantidadPersonajes = 0
 		if(self.estaVivo(Akai) and !Akai.realizoAccion()){

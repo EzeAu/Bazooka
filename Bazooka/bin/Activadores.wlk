@@ -13,6 +13,8 @@ class Activadores{
 	
 	method colision(){
 		game.onCollideDo(Akai, { activador => activador.setEvento() })}
+	method setEvento()
+	method siguientePantalla()
 
 }
 class ActivadoresMapa1 inherits Activadores{
@@ -30,7 +32,7 @@ class ActivadoresMapa1 inherits Activadores{
 	method dialogo(){
 		game.addVisual(dialogosMapa1)
 		dialogosMapa1.animar()
-		game.schedule(11000,{self.siguientePantalla()})
+		game.schedule(1100,{self.siguientePantalla()})
 	}
 	method animacionEvento(){
 		Barco.animacion(0)
@@ -40,7 +42,7 @@ class ActivadoresMapa1 inherits Activadores{
 		
 	}
 	
-	method siguientePantalla(){
+	override method siguientePantalla(){
 		Barco.spriteAnimacion(0)
 		Cavani.spriteAnimacion(0)
 		
@@ -48,7 +50,7 @@ class ActivadoresMapa1 inherits Activadores{
 		juego.iniciar()
 	}
 	method seMueveHasta(x,y){return Cavani.position()==game.at(x,y)}
-	method setEvento(){
+	override method setEvento(){
 
 		Akai.bloqueado(true)
 		Cavani.position(game.at(31,11))
@@ -59,5 +61,15 @@ class ActivadoresMapa1 inherits Activadores{
 		
 	}
 }
+class ActivadoresMapa2 inherits Activadores{
+	override method setEvento(){
+		self.siguientePantalla()
+	}
+	override method siguientePantalla(){
+		game.say(activador3,"soy activador")
+	}
+}
 const activador1 = new ActivadoresMapa1(position=game.at(25,10))
 const activador2 = new ActivadoresMapa1(position=game.at(25,11))
+const activador3 = new ActivadoresMapa2(position=game.at(26,14))
+const activador4 = new ActivadoresMapa2(position=game.at(26,13))
