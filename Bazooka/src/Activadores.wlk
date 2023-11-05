@@ -40,7 +40,7 @@ class ActivadoresMapa1 inherits Activadores{
 		Cavani.position(Cavani.position().left(1))
 		Barco.position(Barco.position().left(1))
 		
-	}
+	}//
 	
 	override method siguientePantalla(){
 		Barco.spriteAnimacion(0)
@@ -66,7 +66,8 @@ class ActivadoresMapa2 inherits Activadores{
 		self.siguientePantalla()
 	}
 	override method siguientePantalla(){
-		game.say(activador3,"soy activador")
+		game.clear()
+		batalla2.set()
 	}
 }
 const activador1 = new ActivadoresMapa1(position=game.at(25,10))
