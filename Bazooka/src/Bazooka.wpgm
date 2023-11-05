@@ -4,17 +4,19 @@ import Personajes.*
 import Enemigos.*
 import MenuBatalla.*
 import Mapas.*
-import Inicio.*
+import Inicio.*////
 
 
 program Bazooka {
 	const inicioSong = game.sound("song/inicio.mp3")
 	const mapa1Song = game.sound("song/mapa1.mp3")
 	const gameoverSong = game.sound("song/gameover.mp3")
+	const batalla1Song = game.sound("song/batalla1.mp3")
 	
 	inicioSong.shouldLoop(true)
 	mapa1Song.shouldLoop(true)
 	gameoverSong.shouldLoop(true)
+	batalla1Song.shouldLoop(true)
 	
 	game.schedule(1, { inicioSong.play()} )
 	keyboard.enter().onPressDo({if (inicio.compruebaInicioSong()){
