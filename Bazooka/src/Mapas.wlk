@@ -7,8 +7,9 @@ import Iniciador.*
 import Activadores.*
 
 class Mapas{
- method iniciar()
- method set()
+ method image(){}
+ method iniciar(){}
+ method set(){}
  method configuroAkai(){
  	Akai.estado("Mapa")
  	Akai.direccion("Derecha")
@@ -75,20 +76,19 @@ const property colisiones=#{ /*caasa 1*/game.at(2,5),game.at(2,6),game.at(3,4),g
 }
 	
 	
-	override  method iniciar(){
-  		Akai.mapa(mapa1)
+	method iniciar(){
   		game.addVisual(fondo)
   		self.set()
   		activador1.colision()
 	
 	}	
-	override  method set(){
+	method set(){
 		self.setObjetos()
 		self.configuracionTeclas()
 		
 	}
-	override method setObjetos(){
-		
+	method setObjetos(){
+
 		activador1.position(game.at(25,10))
 		activador2.position(game.at(25,11))
 		Akai.position(game.at(20,10))
@@ -125,12 +125,12 @@ object mapa2 inherits Mapas{
 	}
 	override method iniciar(){
   		fondo.sprite("Mapas/Map002")
-  		game.addVisual(fondo)
-  		Akai.mapa(mapa2)
+  		//game.addVisual(fondo)
+  		Akai.mapa(self)
   		self.set()
   		activador3.colision()
 		
-	}	
+	}	//
 	override method set(){
 		self.configuroAkai()
 		self.setLimites(Akai,0,31,7,20)
@@ -144,7 +144,7 @@ object mapa2 inherits Mapas{
 	Bat.position(game.at(27,13))
 	activador4.position(game.at(26,13))
 	activador3.position(game.at(26,14))
-	game.addVisual(Akai)
+	//game.addVisual(Akai)
 	game.addVisual(Mino)
 	game.addVisual(Bat)
 	game.addVisual(activador3)
