@@ -26,6 +26,7 @@ class Personaje{
 	var property y1
 	var property y2
 	
+	const menuBatallaSong = game.sound("song/menuBatalla.mp3")
 	
     method image() = sprite + estado + direccion + spriteAnimacion + ".png"
 
@@ -42,8 +43,7 @@ class Personaje{
   			self.animacion(1)
     }
     method avanzarMapa(nuevaPosicion){
-    	
-    	return nuevaPosicion.x().between(x1,x2) and nuevaPosicion.y().between(y1,y2) and !self.colision(nuevaPosicion) and !bloqueado
+    	return nuevaPosicion.x().between(0,31) and nuevaPosicion.y().between(2,19) and !self.colision(nuevaPosicion) and !bloqueado
     }
     method colision(nuevaPosicion){
     	return mapa.colisiones().contains(nuevaPosicion)
@@ -56,7 +56,7 @@ class Personaje{
             spriteAnimacion=incicial//0
         }
     }
-    method ataqueBase(enemigo) {
+    method ataqueBase(enemigo) {//
     	
          if(energia!= 0){
             self.danioPersonaje(20)
@@ -77,6 +77,8 @@ class Personaje{
     			
             })
             
+        }else{
+        	game.say(self, "No tengo energía")
         }    
     }
     method ataqueFuerte(enemigo){
@@ -102,6 +104,8 @@ class Personaje{
             self.energia(self.energia()-2)
             self.comprobarEnergia()
             menuBatallaEp.setEp()       
+        }else{
+        	game.say(self, "No tengo energía")
         }
     }
     method animacionAtaque(accion){
@@ -138,5 +142,5 @@ class Personaje{
     method magiaFuego(){}
     method magiaCura(){}
 }
-const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false, contador=0,x1=0,x2=31,y1=2,y2=19)
-const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 1, position = game.at(25,10), enElEquipo=false, realizoAccion=false, contador=0,x1=0,x2=31,y1=2,y2=19)
+const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false, contador=0, x1=0,x2=31,y1=2,y2=19)
+const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 1, position = game.at(25,10), enElEquipo=false, realizoAccion=false, contador=0, x1=0,x2=31,y1=2,y2=19)

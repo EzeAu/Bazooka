@@ -34,7 +34,7 @@ object inicio {
 			spriteAnimacion=3
 			game.onTick(300, "inicioAnimacion2" ,{ self.animacion(3) } )
 			mapa1Song.play()
-			game.schedule(4500, { 
+			game.schedule(4500, { //
 				sprite="invisible0"
 				mapa1.iniciar()
 				game.removeTickEvent("inicioAnimacion2")

@@ -64,6 +64,8 @@ object menuBatallaEp{
 
 object controlesBatalla{
 	
+	
+	
 	var property ataque2 = true
 	var property fases = 0
 	var property enemigo1 = Barco

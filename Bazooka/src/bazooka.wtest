@@ -1,0 +1,67 @@
+import Personajes.*
+import Enemigos.*
+//import Activadores.*
+//import Batallas.*
+//import Dialogos.*
+//import Iniciador.*
+//import Inicio.*
+//import Mapas.*
+//import MenuBatalla.*
+
+describe "Juego Bazooka"{
+	
+test "Controlo que todos los personajes comiencen con la vida completa"{
+		assert.equals(100,Akai.vida())	
+		assert.equals(100,Pharsa.vida())
+		assert.equals(100,Cavani.vida())
+		assert.equals(100,Barco.vida())
+		assert.equals(100,Mino.vida())
+		assert.equals(100,Bat.vida())
+		}
+
+test "Akai realiza un ataque fuerte a Barco y a Cavani " {
+		Akai.ataqueFuerte(Cavani)
+		Akai.ataqueFuerte(Barco)
+		Cavani.ataqueRecibido(Akai)
+		Barco.ataqueRecibido(Akai)
+		assert.equals(60,Cavani.vida())
+		assert.equals(60,Barco.vida())	
+		assert.equals(6,Akai.energia())	
+	}	
+
+test "Akai realiza un ataque base a Barco y a Cavani " {
+		Akai.ataqueBase(Cavani)
+		Akai.ataqueBase(Barco)
+		Cavani.ataqueRecibido(Akai)
+		Barco.ataqueRecibido(Akai)
+		assert.equals(80,Cavani.vida())
+		assert.equals(80,Barco.vida())	
+		assert.equals(10,Akai.energia())	
+	}	
+
+test "Akai luego de realizar dos ataques fuertes elige proterse para recargar su energia "{
+		Akai.ataqueFuerte(Cavani)
+		Akai.ataqueFuerte(Cavani)
+		assert.equals(6,Akai.energia())	
+		
+		Akai.proteger()
+		assert.equals(10,Akai.energia())
+	}
+
+test "Cavani y Barco atacan a Akai"{
+		assert.equals(100,Akai.vida())	
+		Cavani.atacar(Akai)
+		Cavani.calculoDanio(Akai)
+		assert.equals(90,Akai.vida())
+		
+		Cavani.atacar(Akai)
+		Cavani.calculoDanio(Akai)
+		Barco.atacar(Akai)
+		Barco.calculoDanio(Akai)
+		assert.equals(70,Akai.vida())	
+	}
+}
+
+
+
+
