@@ -6,22 +6,10 @@ import MenuBatalla.*
 import Inicio.*
 import Mapas.*//
 
-object vidaB {
-	
-	method position() = game.at(24,8)
-	
-	method text() = "" + Barco.vida()
-}
-object vidaC {
-	
-	method position() = game.at(20,10)
-	
-	method text() = "" + Cavani.vida()
-}
-
 object batalla1{
 	
 	const batalla1Song = game.sound("song/batalla1.mp3")
+	const mapa2Song = game.sound("song/mapa2.mp3")
 	
 	method set(){
   		//set ubicacion
@@ -83,14 +71,17 @@ object batalla1{
 	method detener(){
 		batalla1Song.pause()
 	}
+	method detenerMapa(){
+		mapa2Song.pause()
+	}
 	
 	method reinicio(){
 		//set estadisticas personajes
 		Akai.vida(100)
 		Akai.energia(10)
 		//set estadisticas enemigos
-		Cavani.vida(100)
-		Barco.vida(100)
+		Cavani.vida(80)
+		Barco.vida(80)
 		controlTurnos.turnoJugadores()
 		Akai.direccion("")
 		menuBatallaHp.setHp()
@@ -121,6 +112,7 @@ object batalla1{
 		Akai.enElEquipo(false)
   		Akai.cambioEstado()
   		self.detener()
+  		mapa2Song.play()
 	}
 	
 }
@@ -129,12 +121,16 @@ object batalla2{
 	
 	const batalla2Song = game.sound("song/batalla2.mp3")
 	
+	
 	method set(){
   		//set ubicacion
-  		Mino.position(game.at(20,10))
+  		Mino.position(game.at(18,11))
   		Bat.position(game.at(24,8))
   		Akai.position(game.at(5,8))
-  		Pharsa.position(game.at(9,8))
+  		//Pharsa.position(game.at(9,8))
+  		
+  		Akai.vida(100)
+  		Akai.energia(10)
   		
   		//set Enemigos
   		controlesBatalla.enemigo2(Bat)
@@ -146,9 +142,10 @@ object batalla2{
   		
   		//////////Objetos en pantalla 		
   		game.addVisual(Akai)
-  		game.addVisual(Bat)
   		game.addVisual(Mino)
-  		game.addVisual(Pharsa)
+  		game.addVisual(Bat)
+  		
+  		//game.addVisual(Pharsa)
   		game.addVisual(flecha)
   		
   		
@@ -158,23 +155,26 @@ object batalla2{
 		
 		//arreglos de sprites
 		Akai.direccion("")
-		Pharsa.direccion("")
+		//Pharsa.direccion("")
 		Mino.direccion("")
 		Bat.direccion("")
   		
   		//Que Personajes pelean
   		Akai.enElEquipo(true)
   		Akai.cambioEstado()
-  		Pharsa.enElEquipo(true)
-  		Pharsa.cambioEstado()
+  		//Pharsa.enElEquipo(true)
+  		//Pharsa.cambioEstado()
   		
   		//Animaciones
   		game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
-  		game.onTick(320, "PharsaAnimacion", { Pharsa.animacion(0) })
+  		//game.onTick(320, "PharsaAnimacion", { Pharsa.animacion(0) })
   		game.onTick(300, "MinoAnimacion", { Mino.animacion(0) })
-  		game.onTick(300, "BatAnimacion", { Bat.animacion(0) })
+  		game.onTick(200, "BatAnimacion", { Bat.animacion(0) })
   		
   		controlTurnos.batalla(self)
+  		
+  		menuBatallaHp.setHp()
+  		menuBatallaEp.setEp()
   		
   		//Controles
   		controlTurnos.turnoJugadores()
@@ -182,8 +182,9 @@ object batalla2{
   		controlesBatalla.aplicar(controlesBatalla.controles())
   		
   		//MUSICA
-  		inicio.detener()
+  		batalla1.detenerMapa()
 		batalla2Song.play()
+		controlesBatalla.controles(true)
   		
   		
 }
@@ -197,8 +198,8 @@ object batalla2{
 		Akai.vida(100)
 		Akai.energia(10)
 		//set estadisticas enemigos
-		Cavani.vida(100)
-		Barco.vida(100)
+		Bat.vida(80)
+		Mino.vida(80)
 		controlTurnos.turnoJugadores()
 		Akai.direccion("")
 		menuBatallaHp.setHp()
@@ -229,6 +230,7 @@ object batalla2{
 		Akai.enElEquipo(false)
   		Akai.cambioEstado()
   		self.detener()
+  	   
 	}
 	
 }
@@ -263,6 +265,8 @@ object invocador {
   		game.addVisual(menuBatallaCara)
   		game.addVisual(menuBatallaHp)
   		game.addVisual(menuBatallaEp)
+  		menuBatallaBase.sprite("AkaiMenu")
+  		menuBatallaCara.sprite("Akai/AkaiCara")
 	}
 	
 	method menuBatallaClose(){
@@ -289,7 +293,7 @@ object controlTurnos{
 	method turnoJugadores(){
 		
 		if(self.partidaGanada(controlesBatalla.enemigo1()) and self.partidaGanada(controlesBatalla.enemigo2())){
-			game.say(Akai, "Gane2")
+			//game.say(Akai, "Gane2")
 			controlesBatalla.controles(false)
 			//game.schedule(1000, {game.say(Akai, "Inicia Mapa2")})
 			self.batalla().borrar()
@@ -308,7 +312,7 @@ object controlTurnos{
 				self.turnoEnemigos()
 				
 			}else{
-				game.say(Akai, "Perdi")
+				//game.say(Akai, "Perdi")
 				controlesBatalla.controles(false)
 				//compruebaGameOverSong = true
 				game.schedule(1000, {
@@ -330,6 +334,8 @@ object controlTurnos{
 					gameOver.sprite("invisible")
 					gameOver.spriteAnimacion(1)
 					gameoverSong.pause()
+					controlesBatalla.enemigo1().direccion("")
+					controlesBatalla.enemigo2().direccion("")
 					//game.clear()
 					self.batalla().reinicio()	
 				})
@@ -363,7 +369,7 @@ object controlTurnos{
 		}
 		
 		if (cantidadPersonajes==0){
-			game.say(Akai, "Gane")
+			//game.say(Akai, "Gane")
 			controlesBatalla.controles(false)
 			
 			

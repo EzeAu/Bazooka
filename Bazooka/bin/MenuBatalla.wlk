@@ -4,7 +4,6 @@ import Personajes.*
 import Enemigos.*
 
 object menuBatallaBase{
-	
 	var property sprite = "AkaiMenu"
 	var property position = game.at(0,1)
 	method image() = "MenuBatalla/" + sprite  + ".png"
