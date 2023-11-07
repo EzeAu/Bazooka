@@ -31,14 +31,10 @@ object batalla1{
   		game.addVisual(Cavani)
   		game.addVisual(flecha)
   		
-  		//game.addVisual(vidaB)///DELETE
-  		//game.addVisual(vidaC)///DELETE
-  		
-  		
   		//Cambios de Estado
 		Barco.cambioEstado()
 		Cavani.cambioEstado()
-		
+		Akai.cambioEstado()
 		
 		//arreglos de sprites
 		Akai.direccion("")
@@ -47,7 +43,6 @@ object batalla1{
   		
   		//Que Personajes pelean
   		Akai.enElEquipo(true)
-  		Akai.cambioEstado()
   		
   		//Animaciones
   		game.onTick(310, "AkaiAnimacion", { Akai.animacion(0) })
@@ -115,12 +110,20 @@ object batalla1{
   		mapa2Song.play()
 	}
 	
+	method finalizado(){
+		mapa2.iniciar()
+	}
+	
 }
 
 object batalla2{
 	
 	const batalla2Song = game.sound("song/batalla2.mp3")
-	
+	const talkSong3 = game.sound("song/talk3.mp3")
+	const talkSong4 = game.sound("song/talk4.mp3")
+	const talkSong5 = game.sound("song/talk5.mp3")
+	const talkSong6 = game.sound("song/talk6.mp3")
+	const finalSong = game.sound("song/final.mp3")
 	
 	method set(){
   		//set ubicacion
@@ -210,29 +213,57 @@ object batalla2{
 	
 	method borrar(){
 		game.removeTickEvent("AkaiAnimacion")
-		game.removeTickEvent("BarcoAnimacion")
-		game.removeTickEvent("CavaniAnimacion")
+		game.removeTickEvent("MinoAnimacion")
+		game.removeTickEvent("BatAnimacion")
 		
-		invocador.menuBatallaClose()
-		Cavani.sprite("invisible")
-		Barco.sprite("invisible")
-		Barco.spriteAnimacion(0)
-		Cavani.spriteAnimacion(0)
-		Barco.estado("")
-		Cavani.estado("")
-		Barco.direccion("")
-		Cavani.direccion("")
-		menuBatallaHp.sprite("invisible0")
-		menuBatallaEp.sprite("invisible0")
-		menuBatallaCara.sprite("invisible0")
+		game.removeVisual(Bat)
+		game.removeVisual(Mino)
+		game.removeVisual(menuBatallaHp)
+		game.removeVisual(menuBatallaCara)
+		game.removeVisual(Akai)
+		game.removeVisual(menuBatalla2)
+		game.removeVisual(menuBatalla1)
+		game.removeVisual(menuBatallaBase)
 		
-		Akai.direccion("Derecha")
-		Akai.enElEquipo(false)
-  		Akai.cambioEstado()
   		self.detener()
   	   
 	}
 	
+	method contexto(){
+		game.addVisual(fin)
+		talkSong3.play()
+		game.schedule(2000, {talkSong3.pause()})
+		game.schedule(7000, {talkSong4.play()}) 
+		game.schedule(14000, {talkSong4.pause()}) 
+		game.schedule(14000, {talkSong5.play()}) 
+		game.schedule(21000, {talkSong5.pause()})
+		game.schedule(21000, {talkSong6.play()}) 
+		game.schedule(28000, {talkSong6.pause()})
+		game.onTick(7000, "contextoFinal", {
+			fin.spriteAnimacion(fin.spriteAnimacion()+1)
+			if(fin.spriteAnimacion()==5){
+				fin.spriteAnimacion("")
+				game.removeTickEvent("contextoFinal")
+				fin.sprite("Inicio/Continuara")
+				game.schedule(2500, {
+					fin.sprite("Inicio/Creditos")
+					finalSong.play()
+				})
+			}
+		})
+	}
+	
+	method finalizado(){
+		self.contexto()
+		// FIN JUEGO
+	}
+	
+}
+object fin{
+	var property sprite = "Contexto/ContextoFinal"
+	var property spriteAnimacion = 1
+	var property position = game.origin()
+	method image() = sprite + spriteAnimacion +".png"
 }
 
 object fondo{
@@ -289,32 +320,91 @@ object controlTurnos{
 	var property fases = 0//0=Ata,Prot 1=ABas,APro 2=Objetivo 3=atacaPersonaje
 	var property compruebaGameOverSong = false
 	var reproducir = true
-	
+	method miTurno(_personaje){
+		if(self.estaVivo(_personaje) and !_personaje.realizoAccion()){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+	}
 	method turnoJugadores(){
 		
 		if(self.partidaGanada(controlesBatalla.enemigo1()) and self.partidaGanada(controlesBatalla.enemigo2())){
-			//game.say(Akai, "Gane2")
 			controlesBatalla.controles(false)
-			//game.schedule(1000, {game.say(Akai, "Inicia Mapa2")})
 			self.batalla().borrar()
-			mapa2.iniciar()
+			self.batalla().finalizado()
 		}
 		cantidadPersonajes = 0
-		if(self.estaVivo(Akai) and !Akai.realizoAccion()){
-			self.cantidadPersonajes(self.cantidadPersonajes()+1)
-		}
-		if(self.estaVivo(Pharsa) and !Akai.realizoAccion()){
-			self.cantidadPersonajes(self.cantidadPersonajes()+1)
-		}
+		self.miTurno(Akai)
 		if (cantidadPersonajes==0){
-			if(self.estaVivo(Pharsa) or self.estaVivo(Akai)){
-				
+			if(self.estaVivo(Akai)){
 				self.turnoEnemigos()
-				
 			}else{
-				//game.say(Akai, "Perdi")
-				controlesBatalla.controles(false)
-				//compruebaGameOverSong = true
+				self.gameOver()
+			}
+		}else{
+			controlesBatalla.fases(0)
+			controlesBatalla.controlFases(0)
+		}
+		self.cantidadPersonajes(0)
+		controlesBatalla.enemigo1().realizoAccion(false)
+		controlesBatalla.enemigo2().realizoAccion(false)
+	}
+	
+	method turnoEnemigos(){
+		cantidadPersonajes = 0
+		menuBatalla1.sprite("invisible0")
+		menuBatalla2.sprite("invisible0")
+		menuBatalla1.seleccionado("")
+		menuBatalla2.seleccionado("")	
+		
+		self.comprobarEnemigos()
+		
+		if (cantidadPersonajes==0){
+			controlesBatalla.controles(false)
+			//WIN!!!
+		}else{
+		game.schedule(2000, {
+			if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
+				controlesBatalla.enemigo1().atacar(Akai)
+				self.turnoEnemigos()
+			}else{
+				if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
+					controlesBatalla.enemigo2().atacar(Akai)
+					self.turnoEnemigos()
+				}else{
+					controlesBatalla.ataque2(true)
+					controlesBatalla.controles(true)
+					controlesBatalla.fases(0)
+					Akai.realizoAccion(false)
+					Akai.modificadorDanio(0)
+					self.turnoJugadores()
+				}
+			}
+		})
+		}	
+	}
+	
+	method comprobarEnemigos(){
+		if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+		if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
+			self.cantidadPersonajes(self.cantidadPersonajes()+1)
+		}
+	}
+	
+	method estaVivo(_personaje){
+		return _personaje.vida()>0 and _personaje.enElEquipo()
+	}
+	
+	method estaVivoEnemigo(_enemigo){
+		return _enemigo.vida()>0 and !_enemigo.realizoAccion() 
+	}
+	method partidaGanada(_enemigo){
+		return _enemigo.vida()<=0  
+	}
+	
+	method gameOver(){
+		controlesBatalla.controles(false)
 				game.schedule(1000, {
 					self.batalla().detener()
 					if(reproducir){
@@ -336,79 +426,8 @@ object controlTurnos{
 					gameoverSong.pause()
 					controlesBatalla.enemigo1().direccion("")
 					controlesBatalla.enemigo2().direccion("")
-					//game.clear()
 					self.batalla().reinicio()	
 				})
-				//GAME OVER!!!
-			}
-		}else{
-			
-			
-			controlesBatalla.fases(0)
-			controlesBatalla.controlFases(0)
-		}
-		self.cantidadPersonajes(0)
-		controlesBatalla.enemigo1().realizoAccion(false)
-		controlesBatalla.enemigo2().realizoAccion(false)
-	}
-	
-	method puedeRealizarAccion(){}
-	
-	method turnoEnemigos(){
-		cantidadPersonajes = 0
-		menuBatalla1.sprite("invisible0")
-		menuBatalla2.sprite("invisible0")
-		menuBatalla1.seleccionado("")
-		menuBatalla2.seleccionado("")
-		//flecha.reinicio()		
-		if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
-			self.cantidadPersonajes(self.cantidadPersonajes()+1)
-		}
-		if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
-			self.cantidadPersonajes(self.cantidadPersonajes()+1)
-		}
-		
-		if (cantidadPersonajes==0){
-			//game.say(Akai, "Gane")
-			controlesBatalla.controles(false)
-			
-			
-			//WIN!!!
-		}else{
-		game.schedule(2000, {
-			if(self.estaVivoEnemigo(controlesBatalla.enemigo1())){
-				controlesBatalla.enemigo1().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
-				self.turnoEnemigos()
-			}else{
-				if(self.estaVivoEnemigo(controlesBatalla.enemigo2())){
-					controlesBatalla.enemigo2().atacar(if(self.estaVivo(Akai)){Akai}else{Pharsa})
-					self.turnoEnemigos()
-				}else{
-					controlesBatalla.ataque2(true)
-					controlesBatalla.controles(true)
-					controlesBatalla.fases(0)
-					Akai.realizoAccion(false)
-					Pharsa.realizoAccion(false)
-					Akai.modificadorDanio(0)
-					Pharsa.modificadorDanio(0)
-					self.turnoJugadores()
-				}
-			}
-		})
-		}
-		
-		
-	}
-	
-	method estaVivo(_personaje){
-		return _personaje.vida()>0 and _personaje.enElEquipo()
-	}
-	
-	method estaVivoEnemigo(_enemigo){
-		return _enemigo.vida()>0 and !_enemigo.realizoAccion() 
-	}
-	method partidaGanada(_enemigo){
-		return _enemigo.vida()<=0  
 	}
 	
 }

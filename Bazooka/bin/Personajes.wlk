@@ -4,7 +4,7 @@ import Iniciador.*
 import Mapas.*
 import MenuBatalla.*
 import Enemigos.*
-//borrar.
+
 class Personaje{
 	var property bloqueado=false
 	var property mapa = mapa1
@@ -113,7 +113,6 @@ class Personaje{
     	self.direccion(accion)
     	game.onTick(200, "AnimacionAtaque", {
     		contador++
-    	//	self.animacion(0)
     	})
     }
     method proteger(){
@@ -139,8 +138,6 @@ class Personaje{
     	}	
     }
     
-    method magiaFuego(){}
-    method magiaCura(){}
 }
 const Akai = new Personaje(sprite = "Akai/Akai", batalla = false, spriteAnimacion = 0, position = game.at(0,10), enElEquipo=false, realizoAccion=false, contador=0, x1=0,x2=31,y1=2,y2=19)
 const Pharsa = new Personaje(sprite = "Pharsa/Pharsa",direccion="Herido", batalla = false, spriteAnimacion = 1, position = game.at(25,10), enElEquipo=false, realizoAccion=false, contador=0, x1=0,x2=31,y1=2,y2=19)

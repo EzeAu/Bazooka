@@ -9,7 +9,8 @@ class Enemigo inherits Personaje{
 	
 	
 	
-    method image() = sprite + estado + direccion + spriteAnimacion + ".png"
+    override method image() = sprite + estado + direccion + spriteAnimacion + ".png"
+	
 	method ataqueRecibido(_personaje){
 			self.vida(self.vida() - _personaje.danioPersonaje())
 			self.direccion("Danio")//
@@ -51,14 +52,16 @@ class Enemigo inherits Personaje{
     }
 		
 		method calculoDanio(_personaje){
-			_personaje.vida(_personaje.vida()-(self.danioPersonaje()-_personaje.modificadorDanio()))
+			if(self.danioPersonaje()<=10 and _personaje.modificadorDanio()==0){
+				_personaje.vida(_personaje.vida()-(self.danioPersonaje()-_personaje.modificadorDanio()))	
+			}
 		}
 	
 }
 
-const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(20,10),realizoAccion=false, danioPersonaje=10,x1=0,x2=31,y1=0,y2=23)
-const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=10,x1=0,x2=31,y1=0,y2=23)
-const Mino = new Enemigo(sprite = "Mino/Mino", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=20,x1=0,x2=31,y1=0,y2=23)
+const Cavani = new Enemigo(sprite = "Cavani/Cavani", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(20,10),realizoAccion=false, danioPersonaje=5,x1=0,x2=31,y1=0,y2=23)
+const Barco = new Enemigo(sprite = "Barco/Barco", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=5,x1=0,x2=31,y1=0,y2=23)
+const Mino = new Enemigo(sprite = "Mino/Mino", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=10,x1=0,x2=31,y1=0,y2=23)
 const Bat = new Enemigo(sprite = "Bat/Bat", batalla = false ,direccion="izquierda", spriteAnimacion = 0, position = game.at(24,8),realizoAccion=false, danioPersonaje=5,x1=0,x2=31,y1=0,y2=23)
 
 

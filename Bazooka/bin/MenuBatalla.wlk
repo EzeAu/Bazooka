@@ -6,8 +6,7 @@ import Enemigos.*
 object menuBatallaBase{
 	var property sprite = "AkaiMenu"
 	var property position = game.at(0,1)
-	method image() = "MenuBatalla/" + sprite  + ".png"
-	
+	method image() = "MenuBatalla/" + sprite  + ".png"	
 }
 class MenuBatalla{
 	
@@ -58,12 +57,7 @@ object menuBatallaEp{
 	}
 }
 
-
-
-
 object controlesBatalla{
-	
-	
 	
 	var property ataque2 = true
 	var property fases = 0
@@ -75,7 +69,9 @@ object controlesBatalla{
 	
 	method aplicar(aplicado){
 		keyboard.left().onPressDo{if(self.controles()){self.controlesMenuMovimiento()}}
+  		
   		keyboard.right().onPressDo{if(self.controles()){self.controlesMenuMovimiento()}}
+  		
   		keyboard.a().onPressDo{
   			if(self.controles()){
   			if(menuBatalla2.fijado() and self.fases()==0){
@@ -95,6 +91,7 @@ object controlesBatalla{
   				}
   			}
   		}
+  		
   		keyboard.s().onPressDo{if(self.controles()){self.controlesMenuSalir()}}
 
 	}
@@ -110,7 +107,7 @@ object controlesBatalla{
   		flecha.cambioElegido()
 	}
 	method controlesMenuAceptar(){
-		if (self.fases()>=0 and self.fases()<4){//VER
+		if (self.fases()>=0 and self.fases()<4){
 			self.fases(self.fases()+1)
 			self.controlFases(self.fases())
 		}

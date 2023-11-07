@@ -7,7 +7,6 @@ import Iniciador.*
 import Activadores.*
 
 class Mapas{
- method image(){}
  method iniciar(){}
  method set(){}
  method configuroAkai(){

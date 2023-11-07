@@ -19,17 +19,15 @@ program Bazooka {
 	batalla1Song.shouldLoop(true)
 	
 	game.schedule(1, { inicioSong.play()} )
-	keyboard.enter().onPressDo({if (inicio.compruebaInicioSong()){
-		inicioSong.stop()
-		inicio.compruebaInicioSong(false)
-		titulo.sprite("invisible0")
-		enter.sprite("invisible0")
-		
-	}})
 	
-	if (controlTurnos.compruebaGameOverSong()){
+	keyboard.enter().onPressDo({
+		inicioSong.stop()
+		titulo.sprite("invisible0")
+		//enter.sprite("invisible0")	
+		game.removeVisual(enter)
 		
-	}
+	})
+	
 	
  	inicio.set()
  		
